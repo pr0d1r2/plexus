@@ -1,6 +1,6 @@
 #!/bin/sh
 
-RUBY_VERSION="2.0.0-p353"
+RUBY_VERSION="2.1.3"
 
 function until_success() {
   false
