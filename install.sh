@@ -143,6 +143,25 @@ case $OSX_VERSION_MINOR in
     XCODE_MOUNTPOINT="/Volumes/Xcode and iOS SDK"
     XCODE_INSTALLER="$XCODE_MOUNTPOINT/Xcode and iOS SDK.mpkg"
     ;;
+  10.8)
+    case $OSX_VERSION in
+      10.8.4 | 10.8.5)
+      XCODE_FILE="xcode_5.1.1.dmg"
+      XCODE_PATH="$HOME/Downloads/$XCODE_FILE"
+      XCODE_PATH_SIZE="4464688"
+      XCODE_PATH_SHASUM="e4bb45174324c3a4b7c66fa1db1083ccbbe2334e"
+      XCODE_PATH_MD5="99b22d57e71bdc86b8fbe113dfb9f739"
+      XCODE_MOUNTPOINT="/Volumes/Xcode"
+      XCODE_CMD_LINE_TOOLS_FILE="command_line_tools_for_osx_mountain_lion_april_2014.dmg"
+      XCODE_CMD_LINE_TOOLS_PATH="$HOME/Downloads/$XCODE_CMD_LINE_TOOLS_FILE"
+      XCODE_CMD_LINE_TOOLS_PATH_SIZE="242384"
+      XCODE_CMD_LINE_TOOLS_PATH_SHASUM="575614b07117b7ddaf69a2edfb09b11e544f48b9"
+      XCODE_CMD_LINE_TOOLS_PATH_MD5="69ccc4ff9e5ecd0958ad13318a3a212a"
+      XCODE_CMD_LINE_TOOLS_MOUNTPOINT="/Volumes/Command Line Tools (Mountain Lion)"
+      XCODE_CMD_LINE_TOOLS_INSTALLER="$XCODE_CMD_LINE_TOOLS_MOUNTPOINT/Command Line Tools (Mountain Lion).mpkg"
+      ;;
+    esac
+    ;;
 esac
 
 if [ ! -d ~/.plexus ]; then
@@ -150,21 +169,45 @@ if [ ! -d ~/.plexus ]; then
 fi
 
 if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
-  check_size $XCODE_PATH $XCODE_PATH_SIZE && \
-  check_shasum $XCODE_PATH $XCODE_PATH_SHASUM && \
-  check_md5 $XCODE_PATH $XCODE_PATH_MD5
-  if [ $? -gt 0 ]; then
-    download $XCODE_PATH_URL_BASE/$XCODE_FILE $XCODE_PATH
-  fi
-
-  mount_dmg $XCODE_PATH || exit $?
-
-  echo "Running XCode installer ..."
-  sudo installer -pkg "$XCODE_INSTALLER" -target / || exit $?
-
-  umount "$XCODE_MOUNTPOINT" || exit $?
-
-  plexus_touch $XCODE_FILE.installed
+  case $XCODE_PATH in
+    "")
+      ;;
+    *)
+      check_size $XCODE_PATH $XCODE_PATH_SIZE && \
+      check_shasum $XCODE_PATH $XCODE_PATH_SHASUM && \
+      check_md5 $XCODE_PATH $XCODE_PATH_MD5
+      case $OSX_VERSION_MINOR in
+        10.6)
+          if [ $? -gt 0 ]; then
+            download $XCODE_PATH_URL_BASE/$XCODE_FILE $XCODE_PATH
+          fi
+          mount_dmg $XCODE_PATH || exit $?
+          echo "Running XCode installer ..."
+          sudo installer -pkg "$XCODE_INSTALLER" -target / || exit $?
+          ;;
+        *)
+          if [ $? -gt 0 ]; then
+            echo "Invalid Xcode dmg (please download it again): $XCODE_PATH"
+            exit 8472
+          fi
+          check_size $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_SIZE && \
+          check_shasum $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_SHASUM && \
+            check_md5 $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_MD5
+          if [ $? -gt 0 ]; then
+            echo "Invalid Xcode Command Line Tools dmg (please download it again): $XCODE_CMD_LINE_TOOLS_PATH_MD5"
+            exit 8473
+          fi
+          mount_dmg $XCODE_PATH || exit $?
+          rsync -a $XCODE_MOUNTPOINT/Xcode.app/ /Applications/Xcode.app/ || exit $?
+          mount_dmg $XCODE_CMD_LINE_TOOLS_PATH
+          sudo installer -pkg "$XCODE_CMD_LINE_TOOLS_INSTALLER" -target / || exit $?
+          umount "$XCODE_CMD_LINE_TOOLS_MOUNTPOINT" || exit $?
+          ;;
+      esac
+      umount "$XCODE_MOUNTPOINT" || exit $?
+      plexus_touch $XCODE_FILE.installed
+      ;;
+  esac
 fi
 
 install_github_zip sstephenson rbenv ~/.rbenv/ || exit $?
