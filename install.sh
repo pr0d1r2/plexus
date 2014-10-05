@@ -192,7 +192,7 @@ if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
           fi
           check_size $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_SIZE && \
           check_shasum $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_SHASUM && \
-            check_md5 $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_MD5
+          check_md5 $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_MD5
           if [ $? -gt 0 ]; then
             echo "Invalid Xcode Command Line Tools dmg (please download it again): $XCODE_CMD_LINE_TOOLS_PATH_MD5"
             exit 8473
