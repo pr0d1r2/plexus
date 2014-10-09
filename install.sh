@@ -2,6 +2,8 @@
 
 RUBY_VERSION="2.1.3"
 
+D_R=`cd \`dirname $0\` ; pwd -P`
+
 function until_success() {
   false
   while [ $? -gt 0 ]; do
@@ -123,6 +125,9 @@ function run() {
   fi
 }
 
+# get sudo to make proces not interruptable
+sudo -v
+
 UNAME=`uname`
 
 case $UNAME in
@@ -218,3 +223,42 @@ eval "$(rbenv init -)"
 
 install_ruby $RUBY_VERSION || exit $?
 rbenv global $RUBY_VERSION || exit $?
+
+if [ ! -f ~/.plexus/homebrew.installed ]; then
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
+  plexus_touch homebrew.installed
+fi
+
+if [ ! -f ~/.plexus/xcode_license.accepted ]; then
+  if [ ! -f $D_R/xcode_accept_license.expect ]; then
+    curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/xcode_accept_license.expect \
+      -o $D_R/xcode_accept_license.expect || exit $?
+  fi
+  expect $D_R/xcode_accept_license.expect || exit $?
+  plexus_touch xcode_license.accepted
+fi
+
+if [ ! -f ~/.plexus/brew_doctor.done ]; then
+  brew doctor || exit $?
+  plexus_touch brew_doctor.done
+fi
+
+if [ ! -f ~/.plexus/brew-cask.installed ]; then
+  brew install caskroom/cask/brew-cask || exit $?
+  plexus_touch brew-cask.installed
+fi
+
+if [ ! -f ~/.plexus/brew-cask.runned ]; then
+  brew cask || exit $?
+  plexus_touch brew-cask.runned
+fi
+
+if [ ! -f ~/.plexus/brew_permissions.set ]; then
+  sudo chown `whoami` /opt/homebrew-cask/Caskroom $HOME/Applications || exit $?
+  plexus_touch brew_permissions.set
+fi
+
+if [ ! -f ~/.plexus/homebrew_versions.tapped ]; then
+  brew tap homebrew/versions || exit $?
+  plexus_touch homebrew_versions.tapped
+fi
