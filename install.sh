@@ -372,6 +372,9 @@ install_dotfile gitconfig
 # Automatically hide and show the Dock
 run_once_with_killall dock_autohide.enable Dock defaults write com.apple.dock autohide -bool true
 
+# Wipe all (default) app icons from the Dock
+run_once_with_killall dock.cleanup Dock defaults write com.apple.dock persistent-apps -array ""
+
 
 killall_marked
 
