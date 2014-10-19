@@ -13,3 +13,6 @@
 	diff = auto
 	interactive = auto
 	status = auto
+[user]
+	name = Marcin Nowicki
+	email = pr0d1r2@gmail.com
