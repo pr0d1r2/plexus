@@ -27,14 +27,14 @@ function check_size() {
 
 function check_shasum() {
   echo "Check shasum of: $1"
-  if [ -f $1.shasum_ok ]; then
+  if [ -f /tmp/`basename $1`.shasum_ok ]; then
     echo "OK (cached)"
     return 0
   else
     case `shasum $1 | cut -b1-40` in
       $2)
         echo "OK"
-        touch $1.shasum_ok
+        touch /tmp/`basename $1`.shasum_ok
         return 0
         ;;
       *)
@@ -47,14 +47,14 @@ function check_shasum() {
 
 function check_md5() {
   echo "Check md5 of: $1"
-  if [ -f $1.md5_ok ]; then
+  if [ -f /tmp/`basename $1`.md5_ok ]; then
     echo "OK (cached)"
     return 0
   else
     case `md5 $1 | cut -f 2 -d = | cut -b 2-33` in
       $2)
         echo "OK"
-        touch $1.md5_ok
+        touch /tmp/`basename $1`.md5_ok
         return 0
         ;;
       *)
