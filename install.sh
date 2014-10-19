@@ -155,6 +155,32 @@ function ensure_project_file() {
   done
 }
 
+function run_brew() {
+  case $1 in
+    "")
+      return 0
+      ;;
+    install)
+      run_once brew_${2}.installed brew $@
+      ;;
+    cask)
+      case $2 in
+        install)
+          run_once brew_cask_${3}.installed brew $@
+          ;;
+      esac
+      ;;
+    *)
+      brew $@ || return $?
+      ;;
+  esac
+}
+
+function brew_bundle_install() {
+  ensure_project_file Brewfile
+  cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
+}
+
 # get sudo to make proces not interruptable
 sudo -v
 
@@ -295,17 +321,7 @@ run_once brew-cask.runned brew cask
 run_once brew_permissions.set sudo chown `whoami` /opt/homebrew-cask/Caskroom
 run_once homebrew_versions.tapped brew tap homebrew/versions
 
-ensure_project_file Brewfile
-
-function run_brew() {
-  case $1 in
-    "")
-      return 0
-      ;;
-  esac
-  brew $@ || return $?
-}
-cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
+brew_bundle_install
 
 run_once postgres_database_directory.create sudo mkdir /usr/local/var/postgres
 run_once postgres_database_directory.ownership sudo chown $USER /usr/local/var/postgres
