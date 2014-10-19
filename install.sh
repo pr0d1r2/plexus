@@ -125,6 +125,22 @@ function run() {
   fi
 }
 
+function params_from_second() {
+  echo $@ | cut -f2- -d " "
+}
+
+function run_once() {
+  if [ ! -d ~/.plexus ]; then
+    mkdir ~/.plexus
+  fi
+  if [ ! -f ~/.plexus/$1 ]; then
+    LAST_PARAMS=`params_from_second $@`
+    echo "Running: $LAST_PARAMS"
+    $LAST_PARAMS || exit $?
+    plexus_touch $1
+  fi
+}
+
 function ensure_project_file() {
   for FILE in $@
   do
@@ -197,10 +213,6 @@ case $OSX_VERSION_MINOR in
     XCODE_CMD_LINE_TOOLS_INSTALLER="$XCODE_CMD_LINE_TOOLS_MOUNTPOINT/Command Line Tools (OS X 10.10).pkg"
     ;;
 esac
-
-if [ ! -d ~/.plexus ]; then
-  mkdir ~/.plexus
-fi
 
 if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
   case $XCODE_PATH in
@@ -276,31 +288,12 @@ if [ ! -f ~/.plexus/homebrew.installed ]; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
   plexus_touch homebrew.installed
 fi
-
-if [ ! -f ~/.plexus/brew_doctor.done ]; then
-  brew doctor || exit $?
-  plexus_touch brew_doctor.done
-fi
-
-if [ ! -f ~/.plexus/brew-cask.installed ]; then
-  brew install caskroom/cask/brew-cask || exit $?
-  plexus_touch brew-cask.installed
-fi
-
-if [ ! -f ~/.plexus/brew-cask.runned ]; then
-  brew cask || exit $?
-  plexus_touch brew-cask.runned
-fi
-
-if [ ! -f ~/.plexus/brew_permissions.set ]; then
-  sudo chown `whoami` /opt/homebrew-cask/Caskroom || exit $?
-  plexus_touch brew_permissions.set
-fi
-
-if [ ! -f ~/.plexus/homebrew_versions.tapped ]; then
-  brew tap homebrew/versions || exit $?
-  plexus_touch homebrew_versions.tapped
-fi
+ 
+run_once brew_doctor.done brew doctor
+run_once brew-cask.installed brew install caskroom/cask/brew-cask
+run_once brew-cask.runned brew cask
+run_once brew_permissions.set sudo chown `whoami` /opt/homebrew-cask/Caskroom
+run_once homebrew_versions.tapped brew tap homebrew/versions
 
 ensure_project_file Brewfile
 
@@ -314,26 +307,11 @@ function run_brew() {
 }
 cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
 
-if [ ! -f ~/.plexus/postgres_database_directory.create ]; then
-  sudo mkdir /usr/local/var/postgres || exit $?
-  plexus_touch postgres_database_directory.create
-fi
-if [ ! -f ~/.plexus/postgres_database_directory.ownership ]; then
-  sudo chown $USER /usr/local/var/postgres || exit $?
-  plexus_touch postgres_database_directory.ownership
-fi
-if [ ! -f ~/.plexus/postgres_database.create ]; then
-  initdb /usr/local/var/postgres -E utf8 || exit $?
-  plexus_touch postgres_database.create
-fi
-if [ ! -f ~/.plexus/postgresql92.linked ]; then
-  ln -sfv /usr/local/opt/postgresql92/*.plist ~/Library/LaunchAgents || exit $?
-  plexus_touch postgresql92.linked
-fi
-if [ ! -f ~/.plexus/postgresql92.loaded ]; then
-  launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist || exit $?
-  plexus_touch postgresql92.loaded
-fi
+run_once postgres_database_directory.create sudo mkdir /usr/local/var/postgres
+run_once postgres_database_directory.ownership sudo chown $USER /usr/local/var/postgres
+run_once postgres_database.create initdb /usr/local/var/postgres -E utf8
+run_once postgresql92.linked ln -sfv /usr/local/opt/postgresql92/*.plist ~/Library/LaunchAgents
+run_once postgresql92.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist
 
 echo > $HOME/.bash_profile
 for FILE in $D_R/bash_profile.d/*.sh
