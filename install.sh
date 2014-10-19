@@ -167,6 +167,21 @@ case $OSX_VERSION_MINOR in
       ;;
     esac
     ;;
+  10.10)
+    XCODE_FILE="xcode_6.1.dmg"
+    XCODE_PATH="$HOME/Downloads/$XCODE_FILE"
+    XCODE_PATH_SIZE="5252160"
+    XCODE_PATH_SHASUM="b2ed3dbdeb5367f97a90274a3043ca68ad47a56c"
+    XCODE_PATH_MD5="22fbf9b605e049bc2aee280d24ac0737"
+    XCODE_MOUNTPOINT="/Volumes/Xcode"
+    XCODE_CMD_LINE_TOOLS_FILE="command_line_tools_for_osx_10.10_for_xcode_6.1.dmg"
+    XCODE_CMD_LINE_TOOLS_PATH="$HOME/Downloads/$XCODE_CMD_LINE_TOOLS_FILE"
+    XCODE_CMD_LINE_TOOLS_PATH_SIZE="348040"
+    XCODE_CMD_LINE_TOOLS_PATH_SHASUM="6a4d74df2153e9a8cd76e4243f66cd4b1b407eb0"
+    XCODE_CMD_LINE_TOOLS_PATH_MD5="75982d25549ad85e23dec13931454a61"
+    XCODE_CMD_LINE_TOOLS_MOUNTPOINT="/Volumes/Command Line Developer Tools"
+    XCODE_CMD_LINE_TOOLS_INSTALLER="$XCODE_CMD_LINE_TOOLS_MOUNTPOINT/Command Line Tools (OS X 10.10).pkg"
+    ;;
 esac
 
 if [ ! -d ~/.plexus ]; then
@@ -234,7 +249,14 @@ if [ ! -f ~/.plexus/xcode_license.accepted ]; then
     curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/xcode_accept_license.expect \
       -o $D_R/xcode_accept_license.expect || exit $?
   fi
-  expect $D_R/xcode_accept_license.expect || exit $?
+  case $OSX_VERSION_MINOR in
+    10.10)
+      sudo expect $D_R/xcode_accept_license.expect || exit $?
+      ;;
+    *)
+      expect $D_R/xcode_accept_license.expect || exit $?
+      ;;
+  esac
   plexus_touch xcode_license.accepted
 fi
 
