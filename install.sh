@@ -125,6 +125,20 @@ function run() {
   fi
 }
 
+function ensure_project_file() {
+  for FILE in $@
+  do
+    if [ ! -f $D_R/$FILE ]; then
+      FILE_DIR=`dirname $D_R/$FILE`
+      if [ ! -d $FILE_DIR ]; then
+        mkdir -p $FILE_DIR
+      fi
+      curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/$FILE \
+        -o $D_R/$FILE || exit $?
+    fi
+  done
+}
+
 # get sudo to make proces not interruptable
 sudo -v
 
@@ -231,10 +245,7 @@ if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
 fi
 
 if [ ! -f ~/.plexus/xcode_license.accepted ]; then
-  if [ ! -f $D_R/xcode_accept_license.expect ]; then
-    curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/xcode_accept_license.expect \
-      -o $D_R/xcode_accept_license.expect || exit $?
-  fi
+  ensure_project_file xcode_accept_license.expect
   case $OSX_VERSION_MINOR in
     10.10)
       sudo expect $D_R/xcode_accept_license.expect || exit $?
@@ -255,10 +266,7 @@ eval "$(rbenv init -)"
 install_ruby $RUBY_VERSION || exit $?
 rbenv global $RUBY_VERSION || exit $?
 
-if [ ! -f $D_R/ruby-versions ]; then
-  curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/ruby-versions \
-    -o $D_R/ruby-versions || exit $?
-fi
+ensure_project_file ruby-versions
 cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
 
 
@@ -294,10 +302,7 @@ if [ ! -f ~/.plexus/homebrew_versions.tapped ]; then
   plexus_touch homebrew_versions.tapped
 fi
 
-if [ ! -f $D_R/Brewfile ]; then
-  curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/Brewfile \
-    -o $D_R/Brewfile || exit $?
-fi
+ensure_project_file Brewfile
 
 function run_brew() {
   case $1 in
