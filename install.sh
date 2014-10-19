@@ -255,6 +255,13 @@ eval "$(rbenv init -)"
 install_ruby $RUBY_VERSION || exit $?
 rbenv global $RUBY_VERSION || exit $?
 
+if [ ! -f $D_R/ruby-versions ]; then
+  curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/ruby-versions \
+    -o $D_R/ruby-versions || exit $?
+fi
+cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
+
+
 install_gem bundler || exit $?
 
 if [ ! -f ~/.plexus/homebrew.installed ]; then
