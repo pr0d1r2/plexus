@@ -387,6 +387,13 @@ case $HOST_NAME in
     ;;
 esac
 
+case $OSX_VERSION_MINOR in
+  10.10)
+    # Disable transparency in the menu bar and elsewhere on Yosemite
+    run_once_with_killall ui_transparency.disable Dock defaults write com.apple.universalaccess reduceTransparency -bool true
+    ;;
+esac
+
 
 killall_marked
 
