@@ -181,9 +181,6 @@ function brew_bundle_install() {
   cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
 }
 
-# get sudo to make proces not interruptable
-sudo -v
-
 UNAME=`uname`
 
 case $UNAME in
