@@ -309,6 +309,27 @@ function run_brew() {
 }
 cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
 
+if [ ! -f ~/.plexus/postgres_database_directory.create ]; then
+  sudo mkdir /usr/local/var/postgres || exit $?
+  plexus_touch postgres_database_directory.create
+fi
+if [ ! -f ~/.plexus/postgres_database_directory.ownership ]; then
+  sudo chown $USER /usr/local/var/postgres || exit $?
+  plexus_touch postgres_database_directory.ownership
+fi
+if [ ! -f ~/.plexus/postgres_database.create ]; then
+  initdb /usr/local/var/postgres -E utf8 || exit $?
+  plexus_touch postgres_database.create
+fi
+if [ ! -f ~/.plexus/postgresql92.linked ]; then
+  ln -sfv /usr/local/opt/postgresql92/*.plist ~/Library/LaunchAgents || exit $?
+  plexus_touch postgresql92.linked
+fi
+if [ ! -f ~/.plexus/postgresql92.loaded ]; then
+  launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist || exit $?
+  plexus_touch postgresql92.loaded
+fi
+
 echo > $HOME/.bash_profile
 for FILE in $D_R/bash_profile.d/*.sh
 do
