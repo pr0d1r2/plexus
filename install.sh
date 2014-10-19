@@ -323,6 +323,7 @@ run_once homebrew_versions.tapped brew tap homebrew/versions
 
 brew_bundle_install
 
+run_once homebrew_var_directory.create sudo mkdir /usr/local/var
 run_once postgres_database_directory.create sudo mkdir /usr/local/var/postgres
 run_once postgres_database_directory.ownership sudo chown $USER /usr/local/var/postgres
 run_once postgres_database.create initdb /usr/local/var/postgres -E utf8
