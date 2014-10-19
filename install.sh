@@ -114,12 +114,26 @@ function params_from_second() {
   echo $@ | cut -f2- -d " "
 }
 
+function params_from_third() {
+  echo $@ | cut -f3- -d " "
+}
+
 function run_once() {
   if [ ! -f ~/.plexus/$1 ]; then
     LAST_PARAMS=`params_from_second $@`
     echo "Running: $LAST_PARAMS"
     $LAST_PARAMS || exit $?
     plexus_touch $1
+  fi
+}
+
+function run_once_with_killall() {
+  if [ ! -f ~/.plexus/$1 ]; then
+    LAST_PARAMS=`params_from_third $@`
+    echo "Running: $LAST_PARAMS"
+    $LAST_PARAMS || exit $?
+    plexus_touch $1
+    MARKED_FOR_KILLALL="$MARKED_FOR_KILLALL $2"
   fi
 }
 
@@ -196,6 +210,14 @@ if [ ! -d ~/.plexus ]; then
 fi
 
 UNAME=`uname`
+MARKED_FOR_KILLALL=""
+
+function killall_marked() {
+  for APP in `echo $MARKED_FOR_KILLALL | tr " " "\n" | sort | uniq`
+  do
+    killall $APP
+  done
+}
 
 case $UNAME in
   Darwin)
@@ -345,6 +367,13 @@ install_gem bundler || exit $?
 
 
 install_dotfile gitconfig
+
+
+# Automatically hide and show the Dock
+run_once_with_killall dock_autohide.enable Dock defaults write com.apple.dock autohide -bool true
+
+
+killall_marked
 
 
 rbenv init - > $HOME/.bash_profile
