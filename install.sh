@@ -171,6 +171,29 @@ function install_dotfile() {
   cat $D_R/$1 > $HOME/.$1
 }
 
+function volumes_mount_points() {
+  mount  | grep " on /Volumes" | sed -e 's/ on /(/g' | cut -f 2 -d \(
+}
+
+function detect_file_on_volumes() {
+  volumes_mount_points | while read LINE; do
+    if [ -f "$LINE/$1" ]; then
+      echo "$LINE/$1"
+      return 0
+    fi
+  done
+}
+
+function detect_file() {
+  DETECTED_FILE="`detect_file_on_volumes $1`"
+  case $DETECTED_FILE in
+    "")
+      DETECTED_FILE="$HOME/Downloads/$1"
+      ;;
+  esac
+  echo $DETECTED_FILE
+}
+
 UNAME=`uname`
 
 case $UNAME in
@@ -183,7 +206,6 @@ esac
 case $OSX_VERSION_MINOR in
   10.6)
     XCODE_FILE="xcode_3.2.6_and_ios_sdk_4.3.dmg"
-    XCODE_PATH="/tmp/$XCODE_FILE"
     XCODE_PATH_SIZE="8678032"
     XCODE_PATH_SHASUM="9eef71cd6687d19f42ce16e8b60fa3b549a58941"
     XCODE_PATH_MD5="7934f61ad86bc12ef6dd8fee2f2e9fb0"
@@ -195,13 +217,11 @@ case $OSX_VERSION_MINOR in
     case $OSX_VERSION in
       10.8.4 | 10.8.5)
       XCODE_FILE="xcode_5.1.1.dmg"
-      XCODE_PATH="$HOME/Downloads/$XCODE_FILE"
       XCODE_PATH_SIZE="4464688"
       XCODE_PATH_SHASUM="e4bb45174324c3a4b7c66fa1db1083ccbbe2334e"
       XCODE_PATH_MD5="99b22d57e71bdc86b8fbe113dfb9f739"
       XCODE_MOUNTPOINT="/Volumes/Xcode"
       XCODE_CMD_LINE_TOOLS_FILE="command_line_tools_for_osx_mountain_lion_april_2014.dmg"
-      XCODE_CMD_LINE_TOOLS_PATH="$HOME/Downloads/$XCODE_CMD_LINE_TOOLS_FILE"
       XCODE_CMD_LINE_TOOLS_PATH_SIZE="242384"
       XCODE_CMD_LINE_TOOLS_PATH_SHASUM="575614b07117b7ddaf69a2edfb09b11e544f48b9"
       XCODE_CMD_LINE_TOOLS_PATH_MD5="69ccc4ff9e5ecd0958ad13318a3a212a"
@@ -212,18 +232,25 @@ case $OSX_VERSION_MINOR in
     ;;
   10.10)
     XCODE_FILE="xcode_6.1.dmg"
-    XCODE_PATH="$HOME/Downloads/$XCODE_FILE"
     XCODE_PATH_SIZE="5252160"
     XCODE_PATH_SHASUM="b2ed3dbdeb5367f97a90274a3043ca68ad47a56c"
     XCODE_PATH_MD5="22fbf9b605e049bc2aee280d24ac0737"
     XCODE_MOUNTPOINT="/Volumes/Xcode"
     XCODE_CMD_LINE_TOOLS_FILE="command_line_tools_for_osx_10.10_for_xcode_6.1.dmg"
-    XCODE_CMD_LINE_TOOLS_PATH="$HOME/Downloads/$XCODE_CMD_LINE_TOOLS_FILE"
     XCODE_CMD_LINE_TOOLS_PATH_SIZE="348040"
     XCODE_CMD_LINE_TOOLS_PATH_SHASUM="6a4d74df2153e9a8cd76e4243f66cd4b1b407eb0"
     XCODE_CMD_LINE_TOOLS_PATH_MD5="75982d25549ad85e23dec13931454a61"
     XCODE_CMD_LINE_TOOLS_MOUNTPOINT="/Volumes/Command Line Developer Tools"
     XCODE_CMD_LINE_TOOLS_INSTALLER="$XCODE_CMD_LINE_TOOLS_MOUNTPOINT/Command Line Tools (OS X 10.10).pkg"
+    ;;
+esac
+
+XCODE_PATH="`detect_file $XCODE_FILE`"
+case $XCODE_CMD_LINE_TOOLS_FILE in
+  "")
+    ;;
+  *)
+    XCODE_CMD_LINE_TOOLS_PATH="`detect_file $XCODE_CMD_LINE_TOOLS_FILE`"
     ;;
 esac
 
