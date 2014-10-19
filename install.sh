@@ -276,7 +276,7 @@ if [ ! -f ~/.plexus/brew-cask.runned ]; then
 fi
 
 if [ ! -f ~/.plexus/brew_permissions.set ]; then
-  sudo chown `whoami` /opt/homebrew-cask/Caskroom $HOME/Applications || exit $?
+  sudo chown `whoami` /opt/homebrew-cask/Caskroom || exit $?
   plexus_touch brew_permissions.set
 fi
 
