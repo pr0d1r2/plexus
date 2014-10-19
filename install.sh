@@ -166,6 +166,11 @@ function brew_bundle_install() {
   cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
 }
 
+function install_dotfile() {
+  ensure_project_file $1
+  cat $D_R/$1 > $HOME/.$1
+}
+
 UNAME=`uname`
 
 case $UNAME in
@@ -308,6 +313,9 @@ ensure_project_file ruby-versions
 cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
 
 install_gem bundler || exit $?
+
+
+install_dotfile gitconfig
 
 
 rbenv init - > $HOME/.bash_profile
