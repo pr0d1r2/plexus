@@ -13,7 +13,7 @@ function until_success() {
 
 function check_size() {
   echo "Check size of: $1"
-  case `du -s $1 | cut -f 1` in
+  case `du -s "$1" | cut -f 1` in
     $2)
       echo "OK"
       return 0
@@ -27,14 +27,14 @@ function check_size() {
 
 function check_shasum() {
   echo "Check shasum of: $1"
-  if [ -f /tmp/`basename $1`.shasum_ok ]; then
+  if [ -f /tmp/`basename "$1"`.shasum_ok ]; then
     echo "OK (cached)"
     return 0
   else
-    case `shasum $1 | cut -b1-40` in
+    case `shasum "$1" | cut -b1-40` in
       $2)
         echo "OK"
-        touch /tmp/`basename $1`.shasum_ok
+        touch /tmp/`basename "$1"`.shasum_ok
         return 0
         ;;
       *)
@@ -47,14 +47,14 @@ function check_shasum() {
 
 function check_md5() {
   echo "Check md5 of: $1"
-  if [ -f /tmp/`basename $1`.md5_ok ]; then
+  if [ -f /tmp/`basename "$1"`.md5_ok ]; then
     echo "OK (cached)"
     return 0
   else
-    case `md5 $1 | cut -f 2 -d = | cut -b 2-33` in
+    case `md5 "$1" | cut -f 2 -d = | cut -b 2-33` in
       $2)
         echo "OK"
-        touch /tmp/`basename $1`.md5_ok
+        touch /tmp/`basename "$1"`.md5_ok
         return 0
         ;;
       *)
@@ -70,9 +70,9 @@ function download() {
 }
 
 function mount_dmg() {
-  if [ ! -f $1.mounted ]; then
+  if [ ! -f /tmp/`basename "$1"`.mounted ]; then
     echo "Mounting $1 ..."
-    hdiutil attach $1 && touch $1.mounted
+    hdiutil attach "$1" && touch /tmp/`basename "$1"`.mounted
     if [ $? -gt 0 ]; then
       return 1
     fi
@@ -259,15 +259,15 @@ if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
     "")
       ;;
     *)
-      check_size $XCODE_PATH $XCODE_PATH_SIZE && \
-      check_shasum $XCODE_PATH $XCODE_PATH_SHASUM && \
-      check_md5 $XCODE_PATH $XCODE_PATH_MD5
+      check_size "$XCODE_PATH" $XCODE_PATH_SIZE && \
+      check_shasum "$XCODE_PATH" $XCODE_PATH_SHASUM && \
+      check_md5 "$XCODE_PATH" $XCODE_PATH_MD5
       case $OSX_VERSION_MINOR in
         10.6)
           if [ $? -gt 0 ]; then
             download $XCODE_PATH_URL_BASE/$XCODE_FILE $XCODE_PATH
           fi
-          mount_dmg $XCODE_PATH || exit $?
+          mount_dmg "$XCODE_PATH" || exit $?
           echo "Running XCode installer ..."
           sudo installer -pkg "$XCODE_INSTALLER" -target / || exit $?
           ;;
@@ -276,16 +276,16 @@ if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
             echo "Invalid Xcode dmg (please download it again): $XCODE_PATH"
             exit 8472
           fi
-          check_size $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_SIZE && \
-          check_shasum $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_SHASUM && \
-          check_md5 $XCODE_CMD_LINE_TOOLS_PATH $XCODE_CMD_LINE_TOOLS_PATH_MD5
+          check_size "$XCODE_CMD_LINE_TOOLS_PATH" $XCODE_CMD_LINE_TOOLS_PATH_SIZE && \
+          check_shasum "$XCODE_CMD_LINE_TOOLS_PATH" $XCODE_CMD_LINE_TOOLS_PATH_SHASUM && \
+          check_md5 "$XCODE_CMD_LINE_TOOLS_PATH" $XCODE_CMD_LINE_TOOLS_PATH_MD5
           if [ $? -gt 0 ]; then
             echo "Invalid Xcode Command Line Tools dmg (please download it again): $XCODE_CMD_LINE_TOOLS_PATH_MD5"
             exit 8473
           fi
-          mount_dmg $XCODE_PATH || exit $?
-          rsync -a $XCODE_MOUNTPOINT/Xcode.app/ /Applications/Xcode.app/ || exit $?
-          mount_dmg $XCODE_CMD_LINE_TOOLS_PATH
+          mount_dmg "$XCODE_PATH" || exit $?
+          rsync -a "$XCODE_MOUNTPOINT/Xcode.app/" /Applications/Xcode.app/ || exit $?
+          mount_dmg "$XCODE_CMD_LINE_TOOLS_PATH"
           sudo installer -pkg "$XCODE_CMD_LINE_TOOLS_INSTALLER" -target / || exit $?
           umount "$XCODE_CMD_LINE_TOOLS_MOUNTPOINT" || exit $?
           ;;
