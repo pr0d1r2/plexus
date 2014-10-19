@@ -83,21 +83,6 @@ function plexus_touch() {
   touch ~/.plexus/$1
 }
 
-function install_github_zip() {
-  if [ ! -f ~/.plexus/github_zip-$1-$2.installed ]; then
-    echo "Installing https://github.com/$1/$2 into $3 ..."
-    if [ ! -f /tmp/$2.zip ]; then
-      download https://github.com/$1/$2/archive/master.zip /tmp/$2.zip
-    fi
-    unzip -o -d /tmp /tmp/$2.zip || return $?
-    if [ ! -d `dirname $3` ]; then
-      mkdir -p `dirname $3` || return $?
-    fi
-    rsync -a /tmp/$2-master/ $3/ || return $?
-    plexus_touch github_zip-$1-$2.installed
-  fi
-}
-
 function install_ruby() {
   if [ ! -f ~/.plexus/ruby-$1.installed ]; then
     echo "Installing ruby $1 ..."
@@ -312,9 +297,6 @@ run_once postgres_database.create initdb /usr/local/var/postgres -E utf8
 run_once postgresql92.linked ln -sfv /usr/local/opt/postgresql92/*.plist ~/Library/LaunchAgents
 run_once postgresql92.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist
 
-
-install_github_zip sstephenson rbenv ~/.rbenv/ || exit $?
-install_github_zip sstephenson ruby-build ~/.rbenv/plugins/ruby-build/ || exit $?
 
 export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
