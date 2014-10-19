@@ -292,26 +292,12 @@ if [ ! -f ~/.plexus/xcode_license.accepted ]; then
   plexus_touch xcode_license.accepted
 fi
 
-install_github_zip sstephenson rbenv ~/.rbenv/ || exit $?
-install_github_zip sstephenson ruby-build ~/.rbenv/plugins/ruby-build/ || exit $?
-
-export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-install_ruby $RUBY_VERSION || exit $?
-rbenv global $RUBY_VERSION || exit $?
-
-ensure_project_file ruby-versions
-cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
-
-
-install_gem bundler || exit $?
-
+ 
 if [ ! -f ~/.plexus/homebrew.installed ]; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
   plexus_touch homebrew.installed
 fi
- 
+
 run_once brew_doctor.done brew doctor
 run_once brew-cask.installed brew install caskroom/cask/brew-cask
 run_once brew-cask.runned brew cask
@@ -325,6 +311,22 @@ run_once postgres_database_directory.ownership sudo chown $USER /usr/local/var/p
 run_once postgres_database.create initdb /usr/local/var/postgres -E utf8
 run_once postgresql92.linked ln -sfv /usr/local/opt/postgresql92/*.plist ~/Library/LaunchAgents
 run_once postgresql92.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist
+
+
+install_github_zip sstephenson rbenv ~/.rbenv/ || exit $?
+install_github_zip sstephenson ruby-build ~/.rbenv/plugins/ruby-build/ || exit $?
+
+export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+install_ruby $RUBY_VERSION || exit $?
+rbenv global $RUBY_VERSION || exit $?
+
+ensure_project_file ruby-versions
+cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
+
+install_gem bundler || exit $?
+
 
 echo > $HOME/.bash_profile
 for FILE in $D_R/bash_profile.d/*.sh
