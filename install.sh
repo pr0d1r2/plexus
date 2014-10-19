@@ -230,20 +230,6 @@ if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
   esac
 fi
 
-install_github_zip sstephenson rbenv ~/.rbenv/ || exit $?
-install_github_zip sstephenson ruby-build ~/.rbenv/plugins/ruby-build/ || exit $?
-
-export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-install_ruby $RUBY_VERSION || exit $?
-rbenv global $RUBY_VERSION || exit $?
-
-if [ ! -f ~/.plexus/homebrew.installed ]; then
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
-  plexus_touch homebrew.installed
-fi
-
 if [ ! -f ~/.plexus/xcode_license.accepted ]; then
   if [ ! -f $D_R/xcode_accept_license.expect ]; then
     curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/xcode_accept_license.expect \
@@ -258,6 +244,20 @@ if [ ! -f ~/.plexus/xcode_license.accepted ]; then
       ;;
   esac
   plexus_touch xcode_license.accepted
+fi
+
+install_github_zip sstephenson rbenv ~/.rbenv/ || exit $?
+install_github_zip sstephenson ruby-build ~/.rbenv/plugins/ruby-build/ || exit $?
+
+export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+install_ruby $RUBY_VERSION || exit $?
+rbenv global $RUBY_VERSION || exit $?
+
+if [ ! -f ~/.plexus/homebrew.installed ]; then
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
+  plexus_touch homebrew.installed
 fi
 
 if [ ! -f ~/.plexus/brew_doctor.done ]; then
