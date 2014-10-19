@@ -16,3 +16,5 @@
 [user]
 	name = Marcin Nowicki
 	email = pr0d1r2@gmail.com
+[push]
+	default = simple
