@@ -375,6 +375,18 @@ run_once_with_killall dock_autohide.enable Dock defaults write com.apple.dock au
 # Wipe all (default) app icons from the Dock
 run_once_with_killall dock.cleanup Dock defaults write com.apple.dock persistent-apps -array ""
 
+# Set computer name (as done via System Preferences → Sharing)
+case $HOST_NAME in
+  "")
+    ;;
+  *)
+    run_once host_name.computer sudo scutil --set ComputerName "$HOST_NAME"
+    run_once host_name.host sudo scutil --set HostName "$HOST_NAME"
+    run_once host_name.localhost sudo scutil --set LocalHostName "$HOST_NAME"
+    run_once host_name.netbiosname sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOST_NAME"
+    ;;
+esac
+
 
 killall_marked
 
