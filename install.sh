@@ -310,7 +310,7 @@ cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
 install_gem bundler || exit $?
 
 
-echo > $HOME/.bash_profile
+rbenv init - > $HOME/.bash_profile
 for FILE in $D_R/bash_profile.d/*.sh
 do
   cat $FILE > $HOME/.bash_profile
