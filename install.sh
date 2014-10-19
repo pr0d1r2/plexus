@@ -284,3 +284,18 @@ if [ ! -f ~/.plexus/homebrew_versions.tapped ]; then
   brew tap homebrew/versions || exit $?
   plexus_touch homebrew_versions.tapped
 fi
+
+if [ ! -f $D_R/Brewfile ]; then
+  curl https://raw.githubusercontent.com/pr0d1r2/plexus/master/Brewfile \
+    -o $D_R/Brewfile || exit $?
+fi
+
+function run_brew() {
+  case $1 in
+    "")
+      return 0
+      ;;
+  esac
+  brew $@ || return $?
+}
+cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
