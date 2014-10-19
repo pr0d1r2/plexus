@@ -255,6 +255,8 @@ eval "$(rbenv init -)"
 install_ruby $RUBY_VERSION || exit $?
 rbenv global $RUBY_VERSION || exit $?
 
+install_gem bundler || exit $?
+
 if [ ! -f ~/.plexus/homebrew.installed ]; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
   plexus_touch homebrew.installed
