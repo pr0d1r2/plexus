@@ -299,3 +299,9 @@ function run_brew() {
   brew $@ || return $?
 }
 cat $D_R/Brewfile | while read LINE; do run_brew $LINE; done
+
+echo > $HOME/.bash_profile
+for FILE in $D_R/bash_profile.d/*.sh
+do
+  cat $FILE > $HOME/.bash_profile
+done
