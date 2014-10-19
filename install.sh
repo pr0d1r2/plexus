@@ -115,9 +115,6 @@ function params_from_second() {
 }
 
 function run_once() {
-  if [ ! -d ~/.plexus ]; then
-    mkdir ~/.plexus
-  fi
   if [ ! -f ~/.plexus/$1 ]; then
     LAST_PARAMS=`params_from_second $@`
     echo "Running: $LAST_PARAMS"
@@ -193,6 +190,10 @@ function detect_file() {
   esac
   echo $DETECTED_FILE
 }
+
+if [ ! -d ~/.plexus ]; then
+  mkdir ~/.plexus
+fi
 
 UNAME=`uname`
 
