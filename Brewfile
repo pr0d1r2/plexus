@@ -7,6 +7,7 @@ install ruby-build
 
 install macvim
 install postgresql92
+install wget
 
 cask install onepassword
 cask install things
