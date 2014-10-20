@@ -9,6 +9,8 @@ install macvim
 install postgresql92
 install wget
 
+cask update
+
 cask install onepassword
 cask install things
 cask install steam
