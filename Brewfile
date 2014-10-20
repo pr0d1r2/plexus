@@ -11,6 +11,7 @@ install wget
 
 cask install onepassword
 cask install things
+cask install steam
 
 linkapps
 
