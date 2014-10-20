@@ -343,6 +343,7 @@ run_once brew-cask.installed brew install caskroom/cask/brew-cask
 run_once brew-cask.runned brew cask
 run_once brew_permissions.set sudo chown `whoami` /opt/homebrew-cask/Caskroom
 run_once homebrew_versions.tapped brew tap homebrew/versions
+run_once homebrew_caskroom_versions.tapped brew tap caskroom/versions
 
 brew_bundle_install
 
