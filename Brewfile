@@ -8,6 +8,7 @@ install ruby-build
 install macvim
 install postgresql92
 install wget
+install ack
 
 cask update
 
