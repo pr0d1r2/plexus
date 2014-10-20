@@ -368,7 +368,16 @@ install_gem bundler || exit $?
 
 
 install_dotfile gitconfig
+install_dotfile vimrc
 
+run_once macvim_bundle.setup ruby $D_R/osx-macvim-bundle-setup.rb
+for VIM_DIR in colors tmp
+do
+  if [ ! -d ~/.vim/$VIM_DIR ]; then
+    mkdir -p ~/.vim/$VIM_DIR
+  fi
+done
+cp $D_R/blackboard.vim ~/.vim/colors/
 
 # Automatically hide and show the Dock
 run_once_with_killall dock_autohide.enable Dock defaults write com.apple.dock autohide -bool true
