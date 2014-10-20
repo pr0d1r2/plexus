@@ -19,6 +19,7 @@ cask install slack-beta
 cask install google-hangouts
 cask install google-chrome
 cask install commandq
+cask install iterm2
 
 linkapps
 
