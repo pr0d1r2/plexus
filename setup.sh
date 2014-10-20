@@ -413,7 +413,7 @@ killall_marked
 
 
 rbenv init - > $HOME/.bash_profile
-for FILE in $D_R/bash_profile.d/*.sh
+for FILE in `ls $D_R/bash_profile.d/*.sh`
 do
-  cat $FILE > $HOME/.bash_profile
+  cat $FILE >> $HOME/.bash_profile
 done
