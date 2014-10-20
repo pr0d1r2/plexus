@@ -21,6 +21,7 @@ cask install google-chrome
 cask install commandq
 cask install iterm2
 cask install virtualbox
+cask install vagrant
 
 linkapps
 
