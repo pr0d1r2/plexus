@@ -15,6 +15,8 @@ cask install onepassword
 cask install things
 cask install steam
 cask install slack-beta
+cask install google-hangouts
+cask install google-chrome
 
 linkapps
 
