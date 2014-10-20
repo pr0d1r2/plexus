@@ -9,6 +9,7 @@ install macvim
 install postgresql92
 install wget
 install ack
+install youtube-dl
 
 cask update
 
