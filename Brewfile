@@ -23,6 +23,7 @@ cask install commandq
 cask install iterm2
 cask install virtualbox
 cask install vagrant
+cask install caffeine
 
 linkapps
 
