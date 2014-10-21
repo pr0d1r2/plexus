@@ -12,6 +12,7 @@ install ack
 install youtube-dl
 install gcc
 install pxz
+install htop-osx
 
 cask update
 
