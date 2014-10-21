@@ -28,6 +28,7 @@ cask install virtualbox
 cask install vagrant
 cask install caffeine
 cask install bartender
+cask install tunnelblick
 
 linkapps
 
