@@ -10,6 +10,8 @@ install postgresql92
 install wget
 install ack
 install youtube-dl
+install gcc
+install pxz
 
 cask update
 
