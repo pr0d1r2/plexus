@@ -355,6 +355,7 @@ run_once postgresql92.linked ln -sfv /usr/local/opt/postgresql92/*.plist ~/Libra
 run_once postgresql92.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist
 run_once htop.chown sudo chown root:wheel /usr/local/Cellar/htop-osx/*/bin/htop
 run_once htop.chmod sudo chmod u+s /usr/local/Cellar/htop-osx/*/bin/htop
+run_once password_delay.set defaults write com.apple.screensaver askForPasswordDelay 5
 
 
 export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
