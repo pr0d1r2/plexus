@@ -13,6 +13,7 @@ install youtube-dl
 install gcc
 install pxz
 install htop-osx
+install aria2
 
 cask update
 
