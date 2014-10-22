@@ -29,6 +29,7 @@ cask install vagrant
 cask install caffeine
 cask install bartender
 cask install tunnelblick
+cask install torbrowser
 
 linkapps
 
