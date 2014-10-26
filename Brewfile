@@ -31,6 +31,7 @@ cask install caffeine
 cask install bartender
 cask install tunnelblick
 cask install torbrowser
+cask install mplayer-osx-extended
 
 linkapps
 
