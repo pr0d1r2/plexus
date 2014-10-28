@@ -14,6 +14,7 @@ install gcc
 install pxz
 install htop-osx
 install aria2
+install pwgen
 
 cask update
 
