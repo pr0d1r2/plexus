@@ -368,6 +368,7 @@ ensure_project_file ruby-versions
 cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
 
 install_gem bundler || exit $?
+bundle install || exit $?
 
 
 install_dotfile gitconfig
