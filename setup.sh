@@ -356,6 +356,8 @@ run_once postgresql92.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl
 run_once htop.chown sudo chown root:wheel /usr/local/Cellar/htop-osx/*/bin/htop
 run_once htop.chmod sudo chmod u+s /usr/local/Cellar/htop-osx/*/bin/htop
 run_once password_delay.set defaults write com.apple.screensaver askForPasswordDelay 5
+run_once mongodb.linked ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+run_once mongodb.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
 
 
 export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"

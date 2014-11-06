@@ -15,6 +15,7 @@ install pxz
 install htop-osx
 install aria2
 install pwgen
+install mongodb
 
 cask update
 
