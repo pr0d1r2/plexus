@@ -17,6 +17,7 @@ install aria2
 install pwgen
 install mongodb
 install ncftp
+install ffmpeg
 
 cask update
 
