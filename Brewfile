@@ -16,6 +16,7 @@ install htop-osx
 install aria2
 install pwgen
 install mongodb
+install ncftp
 
 cask update
 
