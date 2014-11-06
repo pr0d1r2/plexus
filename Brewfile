@@ -36,6 +36,7 @@ cask install tunnelblick
 cask install torbrowser
 cask install mplayer-osx-extended
 cask install skype
+cask install vox
 
 linkapps
 
