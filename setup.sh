@@ -118,6 +118,16 @@ function params_from_third() {
   echo $@ | cut -f3- -d " "
 }
 
+function run_once_a_day() {
+  DATESTAMP=`date "+%Y-%m-%d"`
+  if [ ! -f /tmp/$1-$DATESTAMP ]; then
+    LAST_PARAMS=`params_from_second $@`
+    echo "Running: $LAST_PARAMS"
+    $LAST_PARAMS || exit $?
+    touch /tmp/$1-$DATESTAMP
+  fi
+}
+
 function run_once() {
   if [ ! -f ~/.plexus/$1 ]; then
     LAST_PARAMS=`params_from_second $@`
@@ -155,6 +165,9 @@ function run_brew() {
   case $1 in
     "")
       return 0
+      ;;
+    update)
+      run_once_a_day brew.updated brew update
       ;;
     install)
       run_once brew_${2}.installed brew $@
