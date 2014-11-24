@@ -18,6 +18,7 @@ install pwgen
 install mongodb
 install ncftp
 install ffmpeg
+install qtfaststart
 install terminal-notifier
 
 cask update
