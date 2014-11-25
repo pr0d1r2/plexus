@@ -21,6 +21,7 @@ install ffmpeg
 install qtfaststart
 install terminal-notifier
 install pow
+install qt
 
 cask update
 
