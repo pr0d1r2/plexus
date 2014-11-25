@@ -371,6 +371,16 @@ run_once htop.chmod sudo chmod u+s /usr/local/Cellar/htop-osx/*/bin/htop
 run_once password_delay.set defaults write com.apple.screensaver askForPasswordDelay 5
 run_once mongodb.linked ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
 run_once mongodb.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+run_once pow--install-system.done sudo pow --install-system
+run_once pow--install-local.done pow --install-local
+run_once pow-firewall.loaded sudo launchctl load -w /Library/LaunchDaemons/cx.pow.firewall.plist
+run_once pow-powd.loaded launchctl load -w ~/Library/LaunchAgents/cx.pow.powd.plist
+if [ ! -d "$HOME/Library/Application Support/Pow/Hosts" ]; then
+  mkdir -p "$HOME/Library/Application Support/Pow/Hosts" || exit $?
+fi
+if [ ! -L ~/.pow ]; then
+  ln -s ~/Library/Application\ Support/Pow/Hosts ~/.pow
+fi
 
 
 export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"

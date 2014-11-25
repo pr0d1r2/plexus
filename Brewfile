@@ -20,6 +20,7 @@ install ncftp
 install ffmpeg
 install qtfaststart
 install terminal-notifier
+install pow
 
 cask update
 
