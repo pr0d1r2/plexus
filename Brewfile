@@ -23,6 +23,7 @@ install terminal-notifier
 install pow
 install qt
 install imagemagick
+install memcached
 
 cask update
 
