@@ -400,6 +400,7 @@ bundle install || exit $?
 
 install_dotfile gitconfig
 install_dotfile vimrc
+install_dotfile gemrc
 
 run_once macvim_bundle.setup ruby $D_R/osx-macvim-bundle-setup.rb
 for VIM_DIR in colors tmp
