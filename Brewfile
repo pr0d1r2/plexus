@@ -24,6 +24,7 @@ install pow
 install qt
 install imagemagick
 install memcached
+install tor
 
 cask update
 
