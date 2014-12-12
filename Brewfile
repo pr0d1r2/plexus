@@ -25,6 +25,7 @@ install qt
 install imagemagick
 install memcached
 install tor
+install redis
 
 cask update
 

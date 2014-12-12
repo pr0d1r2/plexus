@@ -383,6 +383,8 @@ if [ ! -L ~/.pow ]; then
 fi
 run_once memcached.linked ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
 run_once memcached.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+run_once redis.linked ln -sfv ln -sfv /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
+run_once redis.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 
 
 export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
