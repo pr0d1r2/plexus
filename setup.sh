@@ -1,6 +1,6 @@
 #!/bin/sh
 
-RUBY_VERSION="2.1.3"
+RUBY_VERSION="2.1.5"
 
 D_R=`cd \`dirname $0\` ; pwd -P`
 
@@ -92,10 +92,10 @@ function install_ruby() {
 }
 
 function install_gem() {
-  if [ ! -f ~/.plexus/gem-$1.installed ]; then
+  if [ ! -f ~/.plexus/gem-$1-$RUBY_VERSION.installed ]; then
     echo "Installing gem $1 ..."
     gem install $1 --no-ri --no-rdoc || return $?
-    plexus_touch gem-$1.installed
+    plexus_touch gem-$1-$RUBY_VERSION.installed
   fi
 }
 
