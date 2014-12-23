@@ -1,8 +1,8 @@
 #!/bin/sh
 
-RUBY_VERSION="2.1.5"
-
 D_R=`cd \`dirname $0\` ; pwd -P`
+
+RUBY_VERSION=`head -n 1 $D_R/ruby-versions`
 
 function until_success() {
   false
