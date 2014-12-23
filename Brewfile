@@ -29,7 +29,6 @@ install redis
 
 cask update
 
-cask install onepassword
 cask install things
 cask install steam
 cask install slack-beta
