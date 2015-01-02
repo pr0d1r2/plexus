@@ -361,11 +361,6 @@ run_once homebrew_caskroom_versions.tapped brew tap caskroom/versions
 brew_bundle_install
 
 run_once homebrew_var_directory.create sudo mkdir /usr/local/var
-run_once postgres_database_directory.create sudo mkdir /usr/local/var/postgres
-run_once postgres_database_directory.ownership sudo chown $USER /usr/local/var/postgres
-run_once postgres_database.create initdb /usr/local/var/postgres -E utf8
-run_once postgresql92.linked ln -sfv /usr/local/opt/postgresql92/*.plist ~/Library/LaunchAgents
-run_once postgresql92.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql92.plist
 run_once htop.chown sudo chown root:wheel /usr/local/Cellar/htop-osx/*/bin/htop
 run_once htop.chmod sudo chmod u+s /usr/local/Cellar/htop-osx/*/bin/htop
 run_once password_delay.set defaults write com.apple.screensaver askForPasswordDelay 5

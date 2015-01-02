@@ -6,7 +6,6 @@ install rbenv-gem-rehash
 install ruby-build
 
 install macvim
-install postgresql92
 install wget
 install ack
 install youtube-dl
@@ -46,6 +45,7 @@ cask install mplayer-osx-extended
 cask install skype
 cask install vox
 cask install spotify
+cask install postgres
 
 linkapps
 
