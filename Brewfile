@@ -25,6 +25,7 @@ install imagemagick
 install memcached
 install tor
 install redis
+install rpl
 
 cask update
 
