@@ -26,6 +26,7 @@ install memcached
 install tor
 install redis
 install rpl
+install nmap
 
 cask update
 
