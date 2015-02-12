@@ -48,6 +48,7 @@ cask install skype
 cask install vox
 cask install spotify
 cask install postgres
+cask install nvalt
 
 linkapps
 
