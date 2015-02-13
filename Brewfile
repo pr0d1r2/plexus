@@ -49,6 +49,7 @@ cask install vox
 cask install spotify
 cask install postgres
 cask install nvalt
+cask install teamspeak-client
 
 linkapps
 
