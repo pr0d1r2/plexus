@@ -1,0 +1,3 @@
+function bs() {
+  echo "bookingsync"
+}
