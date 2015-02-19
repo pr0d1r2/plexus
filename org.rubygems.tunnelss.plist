@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>org.rubygems.tunnelss</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/pr0d1r2/.rbenv/shims/tunnelss</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>UserName</key>
+  <string>root</string>
+</dict>
+</plist>

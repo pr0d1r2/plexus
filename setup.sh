@@ -380,6 +380,13 @@ run_once memcached.linked ln -sfv /usr/local/opt/memcached/*.plist ~/Library/Lau
 run_once memcached.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
 run_once redis.linked ln -sfv ln -sfv /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
 run_once redis.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
+if [ ! -f ~/.plexus/tunnelss.installed ]; then
+  cat $D_R/org.rubygems.tunnelss.plist | sed -e "s/pr0d1r2/$USER/g" > /tmp/org.rubygems.tunnelss.plist
+  sudo mv /tmp/org.rubygems.tunnelss.plist /Library/LaunchDaemons/org.rubygems.tunnelss.plist
+  sudo chown root:wheel /Library/LaunchDaemons/org.rubygems.tunnelss.plist
+  sudo launchctl load /Library/LaunchDaemons/org.rubygems.tunnelss.plist
+  plexus_touch tunnelss.installed
+fi
 
 
 export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"

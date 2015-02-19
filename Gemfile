@@ -10,6 +10,7 @@ gem 'jsonapi-resources', github: 'cerebris/jsonapi-resources'
 gem 'httparty'
 gem 'shelly'
 gem 'socksify'
+gem 'tunnelss'
 
 group :development, :test do
   gem 'factory_girl_rails'
