@@ -50,6 +50,7 @@ cask install spotify
 cask install postgres
 cask install nvalt
 cask install teamspeak-client
+cask install airfoil
 
 linkapps
 
