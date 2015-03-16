@@ -173,9 +173,16 @@ function run_brew() {
       run_once brew_${2}.installed brew $@
       ;;
     cask)
-      case $2 in
-        install)
-          run_once brew_cask_${3}.installed brew $@
+      case $OSX_VERSION_MINOR in
+        10.4)
+          echo "cask commands not supported on 10.4"
+          ;;
+        *)
+          case $2 in
+            install)
+              run_once brew_cask_${3}.installed brew $@
+              ;;
+          esac
           ;;
       esac
       ;;
@@ -212,7 +219,14 @@ function detect_file() {
   DETECTED_FILE="`detect_file_on_volumes $1`"
   case $DETECTED_FILE in
     "")
-      DETECTED_FILE="$HOME/Downloads/$1"
+      case $OSX_VERSION_MINOR in
+        10.4)
+          DETECTED_FILE="$HOME/Desktop/$1"
+          ;;
+        *)
+          DETECTED_FILE="$HOME/Downloads/$1"
+          ;;
+      esac
       ;;
   esac
   echo $DETECTED_FILE
@@ -240,6 +254,15 @@ case $UNAME in
 esac
 
 case $OSX_VERSION_MINOR in
+  10.4)
+    XCODE_FILE="xcode25_8m2558_developerdvd.dmg"
+    XCODE_PATH_SIZE="1849160"
+    XCODE_PATH_SHASUM="not viable in default 10.4"
+    XCODE_PATH_MD5="3bd6c24d8fbbdf9007e15861d173764d"
+    XCODE_PATH_URL_BASE="https://developer.apple.com/downloads/download.action?path=Developer_Tools/xcode_2.5_developer_tools/"
+    XCODE_MOUNTPOINT="/Volumes/Xcode Tools"
+    XCODE_INSTALLER="$XCODE_MOUNTPOINT/Packages/XcodeTools.mpkg"
+    ;;
   10.6)
     XCODE_FILE="xcode_3.2.6_and_ios_sdk_4.3.dmg"
     XCODE_PATH_SIZE="8678032"
@@ -296,12 +319,30 @@ if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
       ;;
     *)
       check_size "$XCODE_PATH" $XCODE_PATH_SIZE && \
-      check_shasum "$XCODE_PATH" $XCODE_PATH_SHASUM && \
-      check_md5 "$XCODE_PATH" $XCODE_PATH_MD5
       case $OSX_VERSION_MINOR in
+        10.4)
+          check_md5 "$XCODE_PATH" $XCODE_PATH_MD5
+          ;;
         10.6)
+          check_shasum "$XCODE_PATH" $XCODE_PATH_SHASUM && \
+          check_md5 "$XCODE_PATH" $XCODE_PATH_MD5
+          ;;
+      esac
+      case $OSX_VERSION_MINOR in
+        10.4 | 10.6)
           if [ $? -gt 0 ]; then
-            download $XCODE_PATH_URL_BASE/$XCODE_FILE $XCODE_PATH
+            case $OSX_VERSION_MINOR in
+              10.4)
+                echo "Download $XCODE_PATH_URL_BASE/$XCODE_FILE manually and restart this script."
+                echo "Browser will auto-open in 5 seconds ..."
+                sleep 5
+                open -a Safari "$XCODE_PATH_URL_BASE/$XCODE_FILE"
+                exit 7777
+                ;;
+              *)
+                download $XCODE_PATH_URL_BASE/$XCODE_FILE $XCODE_PATH
+                ;;
+            esac
           fi
           mount_dmg "$XCODE_PATH" || exit $?
           echo "Running XCode installer ..."
@@ -332,31 +373,62 @@ if [ ! -f ~/.plexus/$XCODE_FILE.installed ]; then
   esac
 fi
 
-if [ ! -f ~/.plexus/xcode_license.accepted ]; then
-  ensure_project_file xcode_accept_license.expect
+case $OSX_VERSION_MINOR in
+  10.4)
+    ;;
+  *)
+    if [ ! -f ~/.plexus/xcode_license.accepted ]; then
+      ensure_project_file xcode_accept_license.expect
+      case $OSX_VERSION_MINOR in
+        10.10)
+          sudo expect $D_R/xcode_accept_license.expect || exit $?
+          ;;
+        *)
+          expect $D_R/xcode_accept_license.expect || exit $?
+          ;;
+      esac
+      plexus_touch xcode_license.accepted
+    fi
+    ;;
+esac
+
+if [ ! -f ~/.plexus/homebrew.installed ]; then
   case $OSX_VERSION_MINOR in
-    10.10)
-      sudo expect $D_R/xcode_accept_license.expect || exit $?
+    10.4)
+      ruby -e "$(curl -fsSkL raw.github.com/mistydemeo/tigerbrew/go/install)" || exit $?
+      plexus_touch homebrew.installed
       ;;
     *)
-      expect $D_R/xcode_accept_license.expect || exit $?
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
+      plexus_touch homebrew.installed
       ;;
   esac
-  plexus_touch xcode_license.accepted
 fi
 
- 
-if [ ! -f ~/.plexus/homebrew.installed ]; then
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || exit $?
-  plexus_touch homebrew.installed
-fi
+case $OSX_VERSION_MINOR in
+  10.4)
+    PATH="/usr/local/bin:$PATH"
+    run_brew install apple-gcc42
+    if [ ! -f /usr/sbin/pkgutil ]; then
+      sudo touch /usr/sbin/pkgutil
+      chmod 755 /usr/sbin/pkgutil
+    fi
+    run_brew install git
+    ;;
+esac
 
 run_once brew_doctor.done brew doctor
-run_once brew-cask.installed brew install caskroom/cask/brew-cask
-run_once brew-cask.runned brew cask
-run_once brew_permissions.set sudo chown `whoami` /opt/homebrew-cask/Caskroom
-run_once homebrew_versions.tapped brew tap homebrew/versions
-run_once homebrew_caskroom_versions.tapped brew tap caskroom/versions
+case $OSX_VERSION_MINOR in
+  10.4)
+    ;;
+  *)
+    run_once brew-cask.installed brew install caskroom/cask/brew-cask
+    run_once brew-cask.runned brew cask
+    run_once brew_permissions.set sudo chown `whoami` /opt/homebrew-cask/Caskroom
+    run_once homebrew_versions.tapped brew tap homebrew/versions
+    run_once homebrew_caskroom_versions.tapped brew tap caskroom/versions
+    ;;
+esac
 
 brew_bundle_install
 
