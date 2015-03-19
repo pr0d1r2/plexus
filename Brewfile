@@ -52,6 +52,10 @@ cask install nvalt
 cask install teamspeak-client
 cask install airfoil
 
+tap pr0d1r2/cask-games
+
+cask install xonotic
+
 linkapps
 
 cleanup
