@@ -51,6 +51,7 @@ cask install postgres
 cask install nvalt
 cask install teamspeak-client
 cask install airfoil
+cask install gog-downloader
 
 tap pr0d1r2/cask-games
 
