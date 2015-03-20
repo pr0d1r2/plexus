@@ -460,7 +460,7 @@ if [ ! -f ~/.plexus/tunnelss.installed ]; then
   plexus_touch tunnelss.installed
 fi
 
-run_once_a_day xonotic.update sh /Applications/Xonotic/misc/tools/rsync-updater/update-to-release.sh
+run_once_a_day xonotic.update sh $HOME/Applications/Xonotic/misc/tools/rsync-updater/update-to-release.sh
 
 export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
