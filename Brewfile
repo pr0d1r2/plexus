@@ -52,10 +52,15 @@ cask install nvalt
 cask install teamspeak-client
 cask install airfoil
 cask install gog-downloader
+cask install xquartz
 
 tap pr0d1r2/cask-games
 
 cask install xonotic
+
+tap homebrew/games
+
+install freeciv
 
 linkapps
 
