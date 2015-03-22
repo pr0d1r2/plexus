@@ -27,6 +27,7 @@ install tor
 install redis
 install rpl
 install nmap
+install iperf3
 
 cask update
 
