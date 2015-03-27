@@ -28,6 +28,7 @@ install redis
 install rpl
 install nmap
 install iperf3
+install unrar
 
 cask update
 
