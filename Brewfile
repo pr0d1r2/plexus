@@ -31,6 +31,7 @@ install iperf3
 install unrar
 install dante
 install watch
+install jnettop
 
 install homebrew/dupes/rsync
 
