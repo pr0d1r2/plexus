@@ -30,6 +30,7 @@ install nmap
 install iperf3
 install unrar
 install dante
+install watch
 
 install homebrew/dupes/rsync
 
