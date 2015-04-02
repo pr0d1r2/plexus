@@ -31,6 +31,8 @@ install iperf3
 install unrar
 install dante
 
+install homebrew/dupes/rsync
+
 cask update
 
 cask install things
