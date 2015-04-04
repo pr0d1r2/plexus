@@ -161,6 +161,17 @@ function ensure_project_file() {
   done
 }
 
+function ensure_ruby2() {
+  export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+
+  install_ruby $RUBY_VERSION || exit $?
+  if [ ! -f ~/.plexus/ruby-$RUBY_VERSION.set_global ]; then
+    rbenv global $RUBY_VERSION || exit $?
+    plexus_touch ruby-$RUBY_VERSION.set_global
+  fi
+}
+
 function run_brew() {
   case $1 in
     "")
@@ -170,7 +181,22 @@ function run_brew() {
       run_once_a_day brew.updated brew update
       ;;
     install)
-      run_once brew_${2}.installed brew $@
+      case $2 in
+        caskroom/cask/brew-cask)
+          case $OSX_VERSION_MINOR in
+            10.4)
+              echo "cask commands not supported on 10.4"
+              ;;
+            *)
+              ensure_ruby2
+              run_once brew-cask.installed brew $@
+              ;;
+          esac
+          ;;
+        *)
+          run_once brew_${2}.installed brew $@
+          ;;
+      esac
       ;;
     cask)
       case $OSX_VERSION_MINOR in
@@ -181,6 +207,10 @@ function run_brew() {
           case $2 in
             install)
               run_once brew_cask_${3}.installed brew $@
+              ;;
+            "")
+              run_once brew-cask.runned brew cask
+              run_once brew_permissions.set sudo chown `whoami` /opt/homebrew-cask/Caskroom
               ;;
           esac
           ;;
@@ -418,17 +448,6 @@ case $OSX_VERSION_MINOR in
 esac
 
 run_once brew_doctor.done brew doctor
-case $OSX_VERSION_MINOR in
-  10.4)
-    ;;
-  *)
-    run_once brew-cask.installed brew install caskroom/cask/brew-cask
-    run_once brew-cask.runned brew cask
-    run_once brew_permissions.set sudo chown `whoami` /opt/homebrew-cask/Caskroom
-    run_once homebrew_versions.tapped brew tap homebrew/versions
-    run_once homebrew_caskroom_versions.tapped brew tap caskroom/versions
-    ;;
-esac
 
 brew_bundle_install
 
@@ -462,11 +481,7 @@ fi
 
 run_once_a_day xonotic.update sh $HOME/Applications/Xonotic/misc/tools/rsync-updater/update-to-release.sh
 
-export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-install_ruby $RUBY_VERSION || exit $?
-rbenv global $RUBY_VERSION || exit $?
+ensure_ruby2
 
 ensure_project_file ruby-versions
 cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done

@@ -35,6 +35,12 @@ install jnettop
 
 install homebrew/dupes/rsync
 
+tap homebrew/versions
+
+install caskroom/cask/brew-cask
+cask
+tap caskroom/versions
+
 cask update
 
 cask install things
