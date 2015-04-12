@@ -32,6 +32,7 @@ install unrar
 install dante
 install watch
 install jnettop
+install phantomjs
 
 install homebrew/dupes/rsync
 
