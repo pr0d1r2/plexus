@@ -33,6 +33,7 @@ install dante
 install watch
 install jnettop
 install phantomjs
+install go
 
 install homebrew/dupes/rsync
 
