@@ -478,6 +478,9 @@ if [ ! -f ~/.plexus/tunnelss.installed ]; then
   sudo launchctl load /Library/LaunchDaemons/org.rubygems.tunnelss.plist
   plexus_touch tunnelss.installed
 fi
+source $D_R/bash_profile.d/GOPATH.sh
+export GOPATH
+run_once_a_day ipfs.got go get -u github.com/ipfs/go-ipfs/cmd/ipfs
 
 run_once_a_day xonotic.update sh $HOME/Applications/Xonotic/misc/tools/rsync-updater/update-to-release.sh
 
