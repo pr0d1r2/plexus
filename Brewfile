@@ -67,6 +67,7 @@ cask install teamspeak-client
 cask install airfoil
 cask install gog-downloader
 cask install xquartz
+cask install vlc
 
 tap pr0d1r2/cask-games
 
