@@ -34,6 +34,7 @@ install watch
 install jnettop
 install phantomjs198
 install go
+install mtr
 
 install homebrew/dupes/rsync
 
