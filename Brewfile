@@ -70,6 +70,7 @@ cask install gog-downloader
 cask install xquartz
 cask install vlc
 cask install osxfuse
+cask install time-tracker
 
 tap pr0d1r2/cask-games
 
