@@ -1,3 +1,3 @@
 function begx() {
-  db_bootstrap && bi && beg
+  bi && db_bootstrap && beg
 }
