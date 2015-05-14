@@ -35,6 +35,7 @@ install jnettop
 install phantomjs198
 install go
 install mtr
+install httping
 
 install homebrew/dupes/rsync
 
