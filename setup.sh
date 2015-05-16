@@ -228,8 +228,8 @@ function brew_bundle_install() {
 }
 
 function install_dotfile() {
-  ensure_project_file $1
-  cat $D_R/$1 > $HOME/.$1
+  ensure_project_file dotfiles/$1
+  cat $D_R/dotfiles/$1 > $HOME/.$1
 }
 
 function volumes_mount_points() {
