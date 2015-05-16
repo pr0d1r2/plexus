@@ -81,6 +81,9 @@ tap homebrew/games
 
 install freeciv
 
+tap pr0d1r2/contrib
+install supercat
+
 linkapps
 
 cleanup
