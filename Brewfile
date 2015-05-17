@@ -36,6 +36,7 @@ install phantomjs198
 install go
 install mtr
 install httping
+install git
 
 install homebrew/dupes/rsync
 
