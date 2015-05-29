@@ -73,6 +73,7 @@ cask install xquartz
 cask install vlc
 cask install osxfuse
 cask install time-tracker
+cask install toggldesktop
 
 tap pr0d1r2/cask-games
 
