@@ -37,6 +37,7 @@ install go
 install mtr
 install httping
 install git
+install gitup
 
 install homebrew/dupes/rsync
 
