@@ -1,4 +1,4 @@
 function echorun() {
-  echo $@
-  $@
+  echo "$@"
+  $@ || return $?
 }
