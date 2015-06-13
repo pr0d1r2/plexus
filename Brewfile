@@ -76,6 +76,7 @@ cask install osxfuse
 cask install time-tracker
 cask install toggldesktop
 cask install imazing
+cask install choosy
 
 tap pr0d1r2/cask-games
 
