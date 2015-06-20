@@ -77,6 +77,7 @@ cask install time-tracker
 cask install toggldesktop
 cask install imazing
 cask install choosy
+cask install vice
 
 tap pr0d1r2/cask-games
 
