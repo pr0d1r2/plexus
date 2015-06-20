@@ -78,6 +78,7 @@ cask install time-tracker
 cask install toggldesktop
 cask install imazing
 cask install choosy
+cask install sublime-text
 
 tap pr0d1r2/contrib
 install supercat
