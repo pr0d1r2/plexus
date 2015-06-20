@@ -79,6 +79,7 @@ cask install toggldesktop
 cask install imazing
 cask install choosy
 cask install sublime-text
+cask install java
 
 tap pr0d1r2/contrib
 install supercat
