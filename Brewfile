@@ -79,14 +79,6 @@ cask install imazing
 cask install choosy
 cask install vice
 
-tap pr0d1r2/cask-games
-
-cask install xonotic
-
-tap homebrew/games
-
-install freeciv
-
 tap pr0d1r2/contrib
 install supercat
 install goenv
