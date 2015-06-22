@@ -500,6 +500,11 @@ install_dotfile vimrc
 install_dotfile gemrc
 install_dotfile spcrc
 
+for NPM_PKG in `cat $D_R/NpmFile`
+do
+  run_once npm-install-$NPM_PKG npm install -g $NPM_PKG
+done
+
 run_once macvim_bundle.setup ruby $D_R/osx-macvim-bundle-setup.rb
 for VIM_DIR in colors tmp
 do
