@@ -15,6 +15,7 @@ gem 'tunnelss'
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'overcommit'
 end
 
 group :test do
