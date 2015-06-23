@@ -7,10 +7,6 @@ function ack_dotenv_contents() {
         ;;
       *)
         ack -Q "$ack_dotenv_contents_VALUE" spec/
-        if [ $? -gt 0 ]; then
-          # DEBUG
-          echo "ack -Q \"$ack_dotenv_contents_VALUE\" spec/"
-        fi
         ;;
     esac
   done
