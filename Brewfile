@@ -39,6 +39,7 @@ install httping
 install git
 install gitup
 install vice
+install readline
 
 install homebrew/dupes/rsync
 
