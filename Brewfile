@@ -40,6 +40,7 @@ install git
 install gitup
 install vice
 install readline
+install ag
 
 install homebrew/dupes/rsync
 
