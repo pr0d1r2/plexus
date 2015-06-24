@@ -262,6 +262,14 @@ function detect_file() {
   echo $DETECTED_FILE
 }
 
+function janus_update() {
+  cd ~/.vim && rake
+}
+
+function dotjanus_update() {
+  cd ~/.janus && git pull && git submodule update --init --recursive
+}
+
 if [ ! -d ~/.plexus ]; then
   mkdir ~/.plexus
 fi
@@ -496,7 +504,7 @@ bundle install || exit $?
 
 
 install_dotfile gitconfig
-install_dotfile vimrc
+install_dotfile vimrc.after
 install_dotfile gemrc
 install_dotfile spcrc
 
@@ -505,14 +513,19 @@ do
   run_once npm-install-$NPM_PKG npm install -g $NPM_PKG
 done
 
-run_once macvim_bundle.setup ruby $D_R/osx-macvim-bundle-setup.rb
-for VIM_DIR in colors tmp
-do
-  if [ ! -d ~/.vim/$VIM_DIR ]; then
-    mkdir -p ~/.vim/$VIM_DIR
-  fi
-done
-cp $D_R/blackboard.vim ~/.vim/colors/
+if [ ! -f ~/.plexus/vim_janus.set ]; then
+  curl -Lo- https://bit.ly/janus-bootstrap | bash
+  plexus_touch vim_janus.set
+else
+  run_once_a_day janus_update
+fi
+
+if [ -d ~/.janus ]; then
+  run_once_a_day dotjanus_update
+else
+  git clone git@github.com:pr0d1r2/dotjanus.git ~/.janus
+  dotjanus_update
+fi
 
 # Automatically hide and show the Dock
 run_once_with_killall dock_autohide.enable Dock defaults write com.apple.dock autohide -bool true
