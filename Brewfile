@@ -41,6 +41,7 @@ install gitup
 install vice
 install readline
 install ag
+install tig
 
 install homebrew/dupes/rsync
 
