@@ -582,3 +582,9 @@ for FILE in `ls $D_R/bash_profile.d/*.sh`
 do
   cat $FILE >> $HOME/.bash_profile
 done
+if [ -d ~/projects/local_shell_aliases ]; then
+  for FILE in `ls ~/projects/local_shell_aliases/*.sh`
+  do
+    cat $FILE >> $HOME/.bash_profile
+  done
+fi
