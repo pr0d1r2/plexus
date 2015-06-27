@@ -491,6 +491,8 @@ export GOPATH
 run_once_a_day ipfs.got go get -u github.com/ipfs/go-ipfs/cmd/ipfs
 run_once_a_day fuse-version.got go get github.com/jbenet/go-fuse-version/fuse-version
 run_once ipfs-directories.created sudo mkdir /ipfs /ipns
+run_once mysql.linked ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+run_once mysql.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 
 run_once_a_day xonotic.update sh $HOME/Applications/Xonotic/misc/tools/rsync-updater/update-to-release.sh
 

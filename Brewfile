@@ -43,6 +43,8 @@ install readline
 install ag
 install tig
 install zsh
+install mysql
+install graphviz
 
 install homebrew/dupes/rsync
 
