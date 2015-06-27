@@ -527,6 +527,12 @@ else
   dotjanus_update
 fi
 
+if [ ! -f ~/.antigen.zsh ]; then
+  curl -L https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh -o ~/.antigen.zsh
+fi
+install_dotfile zshrc
+run_once zsh_as_shell.set chsh -s /usr/local/bin/zsh
+
 # Automatically hide and show the Dock
 run_once_with_killall dock_autohide.enable Dock defaults write com.apple.dock autohide -bool true
 

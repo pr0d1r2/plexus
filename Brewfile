@@ -42,6 +42,7 @@ install vice
 install readline
 install ag
 install tig
+install zsh
 
 install homebrew/dupes/rsync
 
