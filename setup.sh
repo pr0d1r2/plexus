@@ -494,8 +494,6 @@ run_once ipfs-directories.created sudo mkdir /ipfs /ipns
 run_once mysql.linked ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
 run_once mysql.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 
-run_once_a_day xonotic.update sh $HOME/Applications/Xonotic/misc/tools/rsync-updater/update-to-release.sh
-
 ensure_ruby2
 
 ensure_project_file ruby-versions
