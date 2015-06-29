@@ -3,12 +3,16 @@ function bersc() {
     echo "$0: not a git repo!"
     return 1
   fi
-  bersc_SPECS=`git st | grep _spec.rb | grep -v "^D  " | cut -b4- | tr "\n" ' '`
-  for bersc_FILE_CHANGED in `git st | grep -v "^##" | cut -b4- | grep -v "^D  "`
+  bersc_SPECS=()
+  for bersc_FILE_CHANGED in `git st | grep _spec.rb | grep -v "^D  " | cut -b4- | sed -e 's/ -> /|/g' | cut -f 2 -d '|'`
   do
-    bersc_SPEC_FROM_FILE_CHANGED=`echo $bersc_FILE_CHANGED | sed -e 's/^app/spec/' | sed -e 's/^lib/spec\/lib/' | sed -e 's/.rb$/_spec.rb/' | grep '_spec.rb'`
+    bersc_SPECS+=$bersc_FILE_CHANGED
+  done
+  for bersc_FILE_CHANGED in `git st | grep -v "^##" | cut -b4- | grep -v "^D  " | sed -e 's/ -> /|/g' | cut -f 2 -d '|'`
+  do
+    bersc_SPEC_FROM_FILE_CHANGED=`echo $bersc_FILE_CHANGED | sed -e 's/^app/spec/' | sed -e 's/^lib/spec\/lib/' | sed -e 's/.rb$/_spec.rb/' | grep '_spec.rb' | grep -v '_spec_spec.rb'`
     if [ -f $bersc_SPEC_FROM_FILE_CHANGED ]; then
-      bersc_SPECS="$bersc_SPECS $bersc_SPEC_FROM_FILE_CHANGED"
+      bersc_SPECS+=$bersc_SPEC_FROM_FILE_CHANGED
     else
       echo "WARNING: missing spec: $bersc_SPEC_FROM_FILE_CHANGED"
     fi
