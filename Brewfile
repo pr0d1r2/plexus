@@ -45,6 +45,7 @@ install tig
 install zsh
 install mysql
 install graphviz
+install pgcli
 
 install homebrew/dupes/rsync
 
