@@ -494,6 +494,10 @@ run_once ipfs-directories.created sudo mkdir /ipfs /ipns
 run_once mysql.linked ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
 run_once mysql.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 
+if [ ! -e /Applications/Firefox.app ]; then
+  ln -s ~/Applications/Firefox.app /Applications/Firefox.app
+fi
+
 ensure_ruby2
 
 ensure_project_file ruby-versions
