@@ -46,6 +46,8 @@ install zsh
 install mysql
 install graphviz
 install pgcli
+install wdiff
+install colordiff
 
 install homebrew/dupes/rsync
 
