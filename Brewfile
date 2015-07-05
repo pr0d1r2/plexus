@@ -90,6 +90,7 @@ cask install choosy
 cask install sublime-text
 cask install java
 cask install firefox
+cask install multifirefox
 
 tap pr0d1r2/contrib
 install supercat
