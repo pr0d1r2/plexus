@@ -48,6 +48,7 @@ install graphviz
 install pgcli
 install wdiff
 install colordiff
+install x265
 
 install homebrew/dupes/rsync
 
