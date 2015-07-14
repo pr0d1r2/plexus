@@ -1,0 +1,3 @@
+function tabe() {
+  mvim $@ || return $?
+}
