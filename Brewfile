@@ -49,6 +49,7 @@ install pgcli
 install wdiff
 install colordiff
 install x265
+install p7zip
 
 install homebrew/dupes/rsync
 
