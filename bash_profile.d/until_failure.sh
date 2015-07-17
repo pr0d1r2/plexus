@@ -1,4 +1,6 @@
 function until_failure() {
+  local until_failure_ERR
+  local until_failure_SLEEP
   case $SLEEP in
     "")
       until_failure_SLEEP=60
@@ -15,6 +17,4 @@ function until_failure() {
       sleep $until_failure_SLEEP
     fi
   done
-  unset until_failure_ERR
-  unset until_failure_SLEEP
 }

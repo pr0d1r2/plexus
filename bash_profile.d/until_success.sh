@@ -1,4 +1,6 @@
 function until_success() {
+  local until_success_ERR
+  local until_success_SLEEP
   case $SLEEP in
     "")
       until_success_SLEEP=60
@@ -15,6 +17,4 @@ function until_success() {
       sleep $until_success_SLEEP
     fi
   done
-  unset until_success_ERR
-  unset until_success_SLEEP
 }
