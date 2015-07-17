@@ -15,6 +15,8 @@ function until_failure() {
     until_failure_ERR=$?
     if [ $until_failure_ERR -eq 0 ]; then
       sleep $until_failure_SLEEP
+    else
+      return $until_failure_ERR
     fi
   done
 }
