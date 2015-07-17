@@ -18,7 +18,7 @@ function until_success() {
     until_success_ERR=$?
     if [ $until_success_ERR -gt 0 ]; then
       sleep $until_success_SLEEP
-      until_success_RUN+=1
+      until_success_RUN=$(( $until_success_RUN + 1 ))
     fi
   done
 }
