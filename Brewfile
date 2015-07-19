@@ -50,6 +50,8 @@ install wdiff
 install colordiff
 install x265
 install p7zip
+install ant
+install dos2unix
 
 install homebrew/dupes/rsync
 
@@ -93,6 +95,7 @@ cask install sublime-text
 cask install java
 cask install firefox
 cask install multifirefox
+cask install android-studio
 
 tap pr0d1r2/contrib
 install supercat

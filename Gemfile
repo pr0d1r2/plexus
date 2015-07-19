@@ -11,6 +11,7 @@ gem 'httparty'
 gem 'shelly'
 gem 'socksify'
 gem 'tunnelss'
+gem 'compass'
 
 group :development, :test do
   gem 'factory_girl_rails'
