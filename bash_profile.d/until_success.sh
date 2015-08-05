@@ -13,7 +13,7 @@ function until_success() {
   until_success_ERR=1
   until_success_RUN=1
   while [ $until_success_ERR -gt 0 ]; do
-    echo "until_failure: run #$until_success_RUN"
+    echo "until_success: run #$until_success_RUN (`date`)"
     $@
     until_success_ERR=$?
     if [ $until_success_ERR -gt 0 ]; then
@@ -21,4 +21,5 @@ function until_success() {
       until_success_RUN=$(( $until_success_RUN + 1 ))
     fi
   done
+  echo "until_success: SUCCESS: run #$until_failure_RUN (`date`)"
 }

@@ -13,13 +13,14 @@ function until_failure() {
   until_failure_ERR=0
   until_failure_RUN=1
   while [ $until_failure_ERR -eq 0 ]; do
-    echo "until_failure: run #$until_failure_RUN"
+    echo "until_failure: run #$until_failure_RUN (`date`)"
     $@
     until_failure_ERR=$?
     if [ $until_failure_ERR -eq 0 ]; then
       sleep $until_failure_SLEEP
       until_failure_RUN=$(( $until_failure_RUN + 1 ))
     else
+      echo "until_failure: FAILURE: run #$until_failure_RUN (`date`)"
       return $until_failure_ERR
     fi
   done
