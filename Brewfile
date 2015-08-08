@@ -96,11 +96,11 @@ cask install java
 cask install firefox
 cask install multifirefox
 cask install android-studio
-cask install wkhtmltopdf
 
 tap pr0d1r2/contrib
 install supercat
 install goenv
+install wkhtmltopdf-old
 
 linkapps
 
