@@ -91,7 +91,6 @@ cask install time-tracker
 cask install toggldesktop
 cask install imazing
 cask install choosy
-cask install sublime-text
 cask install java
 cask install firefox
 cask install multifirefox
