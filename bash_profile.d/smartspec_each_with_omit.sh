@@ -16,7 +16,7 @@ function smartspec_each_with_omit() {
         echo
         echo $smartspec_each_with_omit_SPEC
         echo
-        rspec $smartspec_each_with_omit_SPEC ; smartspec_each_with_omit_ERR=$?
+        bundle exec rspec $smartspec_each_with_omit_SPEC ; smartspec_each_with_omit_ERR=$?
         if [ $smartspec_each_with_omit_ERR -eq 0 ]; then
           echo $smartspec_each_with_omit_SPEC >> smartspec_each.done
         else

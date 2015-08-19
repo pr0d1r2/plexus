@@ -16,7 +16,7 @@ function smartspec_each() {
         echo
         echo $smartspec_each_SPEC
         echo
-        rspec $smartspec_each_SPEC ; smartspec_each_ERR=$?
+        bundle exec rspec $smartspec_each_SPEC ; smartspec_each_ERR=$?
         if [ $smartspec_each_ERR -eq 0 ]; then
           echo $smartspec_each_SPEC >> smartspec_each.done
         else
