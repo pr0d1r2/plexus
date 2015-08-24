@@ -288,7 +288,7 @@ case $UNAME in
   Darwin)
     OSX_VERSION=`sw_vers -productVersion`
     OSX_VERSION_MINOR=`echo $OSX_VERSION | cut -f1-2 -d .`
-    sudo launchctl limit maxfiles 12228 12228
+    run_once maxfiles.set sudo launchctl limit maxfiles 12228 12228
     ;;
 esac
 
