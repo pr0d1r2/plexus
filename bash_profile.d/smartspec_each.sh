@@ -1,14 +1,14 @@
 function smartspec_each() {
   smartspec_each_DONE=`cat smartspec_each.done`
 
-  for smartspec_each_SPEC in `rspec \`echo "$@" | \
+  for smartspec_each_SPEC in `echo "$@" | \
          grep "^rspec" | \
          sed -e "s/spec\//#/" | \
          cut -f 2 -d "#" | \
          sed "s/^/spec\//g" | \
-         tr "\n" " "\``
+         tr "\n" " "`
   do
-    case $DONE in
+    case $smartspec_each_DONE in
       *$smartspec_each_SPEC*)
         echo "Ommiting done feature: $smartspec_each_SPEC"
         ;;
