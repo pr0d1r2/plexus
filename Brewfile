@@ -43,7 +43,6 @@ install readline
 install ag
 install tig
 install zsh
-install mysql
 install graphviz
 install pgcli
 install wdiff
@@ -56,6 +55,9 @@ install dos2unix
 install homebrew/dupes/rsync
 
 tap homebrew/versions
+
+install mysql55
+link mysql55 --force
 
 install caskroom/cask/brew-cask
 cask
