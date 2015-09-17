@@ -458,6 +458,10 @@ esac
 
 run_once brew_doctor.done brew doctor
 
+run_once rbenv-plugins-dir.create mkdir -p ~/.rbenv/plugins
+run_once rbenv-communal-gems.install git clone git://github.com/tpope/rbenv-communal-gems.git ~/.rbenv/plugins/rbenv-communal-gems
+run_once rbenv.communize rbenv communize --all
+
 brew_bundle_install
 
 run_once homebrew_var_directory.create sudo mkdir /usr/local/var
