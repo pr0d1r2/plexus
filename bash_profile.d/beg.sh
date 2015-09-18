@@ -1,3 +1,3 @@
 function beg() {
-  be guard || return $?
+  be guard $@ || return $?
 }
