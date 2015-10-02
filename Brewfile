@@ -77,7 +77,6 @@ cask install caffeine
 cask install bartender
 cask install torbrowser
 cask install skype
-cask install vox
 cask install spotify
 cask install postgres
 cask install nvalt
