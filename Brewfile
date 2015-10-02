@@ -38,7 +38,6 @@ install mtr
 install httping
 install git
 install gitup
-install vice
 install readline
 install ag
 install tig
@@ -47,10 +46,7 @@ install graphviz
 install pgcli
 install wdiff
 install colordiff
-install x265
 install p7zip
-install ant
-install dos2unix
 
 install homebrew/dupes/rsync
 
@@ -80,20 +76,12 @@ cask install skype
 cask install spotify
 cask install postgres
 cask install nvalt
-cask install teamspeak-client
-cask install airfoil
-cask install gog-downloader
-cask install xquartz
 cask install vlc
 cask install osxfuse
 cask install time-tracker
-cask install toggldesktop
 cask install imazing
 cask install choosy
-cask install java
 cask install firefox
-cask install multifirefox
-cask install android-studio
 
 tap pr0d1r2/contrib
 install supercat
