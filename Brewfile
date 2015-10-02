@@ -70,7 +70,6 @@ cask install iterm2
 cask install virtualbox
 cask install vagrant
 cask install caffeine
-cask install bartender
 cask install torbrowser
 cask install skype
 cask install spotify
