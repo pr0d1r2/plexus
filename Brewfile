@@ -75,7 +75,6 @@ cask install virtualbox
 cask install vagrant
 cask install caffeine
 cask install bartender
-cask install tunnelblick
 cask install torbrowser
 cask install mplayer-osx-extended
 cask install skype
