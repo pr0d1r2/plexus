@@ -76,7 +76,6 @@ cask install vagrant
 cask install caffeine
 cask install bartender
 cask install torbrowser
-cask install mplayer-osx-extended
 cask install skype
 cask install vox
 cask install spotify
