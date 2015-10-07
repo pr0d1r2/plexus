@@ -4,7 +4,7 @@ function becc() {
     return 1
   fi
   becc_CUCUMBERS=()
-  for becc_FILE_CHANGED in `git st | grep ".feature" | grep -v "_steps.rb" | grep -v "^D  " | cut -b4- | sed -e 's/ -> /|/g' | cut -f 2 -d '|'`
+  for becc_FILE_CHANGED in `git st | grep ".feature" | grep -v "_steps.rb" | grep -v features/support | grep -v "^D  " | cut -b4- | sed -e 's/ -> /|/g' | cut -f 2 -d '|'`
   do
     becc_CUCUMBERS+=$becc_FILE_CHANGED
   done
