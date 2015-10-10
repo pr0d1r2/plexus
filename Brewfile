@@ -1,6 +1,8 @@
 update
 upgrade
 
+tap homebrew/versions
+
 install rbenv
 install rbenv-gem-rehash
 install ruby-build
@@ -32,7 +34,6 @@ install unrar
 install dante
 install watch
 install jnettop
-install phantomjs198
 install go
 install mtr
 install httping
@@ -50,8 +51,6 @@ install p7zip
 
 install homebrew/dupes/rsync
 
-tap homebrew/versions
-
 install mysql55
 link mysql55 --force
 
@@ -61,9 +60,7 @@ tap caskroom/versions
 
 cask update
 
-cask install things
-cask install steam
-cask install slack-beta
+cask install slack
 cask install google-hangouts
 cask install commandq
 cask install iterm2

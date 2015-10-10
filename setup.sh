@@ -341,6 +341,9 @@ case $OSX_VERSION_MINOR in
     XCODE_CMD_LINE_TOOLS_MOUNTPOINT="/Volumes/Command Line Developer Tools"
     XCODE_CMD_LINE_TOOLS_INSTALLER="$XCODE_CMD_LINE_TOOLS_MOUNTPOINT/Command Line Tools (OS X 10.10).pkg"
     ;;
+  10.11)
+    XCODE_FILE="xcode_7.0.1.dmg"
+    ;;
 esac
 
 XCODE_PATH="`detect_file $XCODE_FILE`"
@@ -458,13 +461,13 @@ esac
 
 run_once brew_doctor.done brew doctor
 
-run_once rbenv-plugins-dir.create mkdir -p ~/.rbenv/plugins
-run_once rbenv-communal-gems.install git clone git://github.com/tpope/rbenv-communal-gems.git ~/.rbenv/plugins/rbenv-communal-gems
-run_once rbenv.communize rbenv communize --all
+run_once homebrew_var_directory.create sudo mkdir /usr/local/var
+run_once homebrew_var_directory.permissions sudo chown `whoami` /usr/local/var
+run_once homebrew_var_log_directory.create sudo mkdir /usr/local/var/log
+run_once homebrew_var_log_directory.permissions sudo chown `whoami` /usr/local/var/log
 
 brew_bundle_install
 
-run_once homebrew_var_directory.create sudo mkdir /usr/local/var
 run_once htop.chown sudo chown root:wheel /usr/local/Cellar/htop-osx/*/bin/htop
 run_once htop.chmod sudo chmod u+s /usr/local/Cellar/htop-osx/*/bin/htop
 run_once password_delay.set defaults write com.apple.screensaver askForPasswordDelay 5
@@ -507,6 +510,21 @@ ensure_ruby2
 
 ensure_project_file ruby-versions
 cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
+
+run_once rbenv-plugins-dir.create mkdir -p ~/.rbenv/plugins
+run_once rbenv-communal-gems.install git clone git://github.com/tpope/rbenv-communal-gems.git ~/.rbenv/plugins/rbenv-communal-gems
+run_once rbenv.communize rbenv communize --all
+
+case $OSX_VERSION_MINOR in
+  10.11)
+    run_once ruby_bundle_eventmachine_el_captain.fix bundle config build.eventmachine --with-cppflags=-I$(brew --prefix openssl)/include
+    run_once ruby_bundle_puma_el_captain.fix bundle config build.puma --with-cppflags=-I$(brew --prefix openssl)/include
+    run_once ruby_bundle_therubyracer_el_captain.fix bundle config build.therubyracer --with-v8-dir=`dirname \`gem which libv8\``/../vendor/v8
+    ;;
+  *)
+    run_brew install phantomjs198
+    ;;
+esac
 
 install_gem bundler || exit $?
 bundle install || exit $?
