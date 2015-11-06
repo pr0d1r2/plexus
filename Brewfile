@@ -48,6 +48,7 @@ install pgcli
 install wdiff
 install colordiff
 install p7zip
+install heroku
 
 install homebrew/dupes/rsync
 

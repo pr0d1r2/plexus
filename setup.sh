@@ -514,6 +514,10 @@ cat $D_R/ruby-versions | while read LINE; do install_ruby $LINE; done
 run_once rbenv-plugins-dir.create mkdir -p ~/.rbenv/plugins
 run_once rbenv-communal-gems.install git clone git://github.com/tpope/rbenv-communal-gems.git ~/.rbenv/plugins/rbenv-communal-gems
 run_once rbenv.communize rbenv communize --all
+run_once rbenv-which-ext.install git clone https://github.com/yyuu/rbenv-which-ext.git ~/.rbenv/plugins/rbenv-which-ext
+if [ -f $HOME/.rbenv/shims/heroku ]; then
+  mv $HOME/.rbenv/shims/heroku $HOME/.rbenv/shims/heroku.old
+fi
 
 case $OSX_VERSION_MINOR in
   10.11)
