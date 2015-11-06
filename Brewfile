@@ -78,6 +78,7 @@ cask install time-tracker
 cask install imazing
 cask install choosy
 cask install firefox
+cask install airfoil
 
 tap pr0d1r2/contrib
 install supercat
