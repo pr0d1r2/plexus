@@ -518,6 +518,8 @@ run_once rbenv-which-ext.install git clone https://github.com/yyuu/rbenv-which-e
 if [ -f $HOME/.rbenv/shims/heroku ]; then
   mv $HOME/.rbenv/shims/heroku $HOME/.rbenv/shims/heroku.old
 fi
+run_once rbenv-aliases.install git clone git://github.com/tpope/rbenv-aliases.git ~/.rbenv/plugins/rbenv-aliases
+rbenv alias --auto
 run_once rbenv-bundler-ruby-version.install git clone https://github.com/aripollak/rbenv-bundler-ruby-version.git ~/.rbenv/plugins/rbenv-bundler-ruby-version
 
 case $OSX_VERSION_MINOR in
