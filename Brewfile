@@ -24,6 +24,7 @@ install terminal-notifier
 install pow
 install qt
 install imagemagick
+install png2ico
 install memcached
 install tor
 install redis
