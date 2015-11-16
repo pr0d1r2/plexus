@@ -83,6 +83,9 @@ cask install firefox
 cask install airfoil
 cask install balsamiq-mockups
 
+tap homebrew/science
+install opencv3
+
 tap pr0d1r2/contrib
 install supercat
 install goenv
