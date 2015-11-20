@@ -84,7 +84,7 @@ cask install airfoil
 cask install balsamiq-mockups
 
 tap homebrew/science
-install opencv3
+install opencv
 
 tap pr0d1r2/contrib
 install supercat
