@@ -502,6 +502,9 @@ run_once ipfs-directories.created sudo mkdir /ipfs /ipns
 run_once mysql.linked ln -sfv /usr/local/opt/mysql55/*.plist ~/Library/LaunchAgents
 run_once mysql.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql55.plist
 
+run_once elasticsearch.linked ln -sfv /usr/local/opt/elasticsearch/*.plist ~/Library/LaunchAgents
+run_once elasticsearch.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
+
 if [ ! -e /Applications/Firefox.app ]; then
   ln -s ~/Applications/Firefox.app /Applications/Firefox.app
 fi
