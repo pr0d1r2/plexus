@@ -91,6 +91,9 @@ install supercat
 install goenv
 install wkhtmltopdf-old
 
+cask install java
+install elasticsearch
+
 linkapps
 
 cleanup
