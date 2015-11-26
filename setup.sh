@@ -505,6 +505,8 @@ run_once mysql.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql5
 run_once elasticsearch.linked ln -sfv /usr/local/opt/elasticsearch/*.plist ~/Library/LaunchAgents
 run_once elasticsearch.loaded launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
 
+run_once chrome_swipe_navigate.disable defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool FALSE
+
 if [ ! -e /Applications/Firefox.app ]; then
   ln -s ~/Applications/Firefox.app /Applications/Firefox.app
 fi
