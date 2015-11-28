@@ -50,6 +50,7 @@ install wdiff
 install colordiff
 install p7zip
 install heroku
+install android-sdk
 
 install homebrew/dupes/rsync
 
