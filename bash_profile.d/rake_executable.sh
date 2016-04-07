@@ -1,3 +1,3 @@
-function rake_excecutable() {
-  binstubbed_excecutable rake
+function rake_executable() {
+  binstubbed_executable rake
 }

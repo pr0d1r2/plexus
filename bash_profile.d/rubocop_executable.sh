@@ -1,3 +1,3 @@
-function rubocop_excecutable() {
-  binstubbed_excecutable rubocop
+function rubocop_executable() {
+  binstubbed_executable rubocop
 }
