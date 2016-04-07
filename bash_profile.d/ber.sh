@@ -1,3 +1,3 @@
 function ber() {
-  be rake $@ || return $?
+  be `rake_executable` $@ || return $?
 }

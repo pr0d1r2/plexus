@@ -1,3 +1,3 @@
 function bec() {
-  bundle exec cucumber $@ || return $?
+  bundle exec `cucumber_executable` $@ || return $?
 }
