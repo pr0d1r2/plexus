@@ -1,4 +1,7 @@
 function bersc() {
+  local bersc_FILE_CHANGED
+  local bersc_SPECS
+  local bersc_SPEC_FROM_FILE_CHANGED
   if [ ! -d .git ]; then
     echo "$0: not a git repo!"
     return 1
@@ -26,7 +29,4 @@ function bersc() {
       echorun bers $bersc_SPECS || return $?
       ;;
   esac
-  unset bersc_SPECS
-  unset bersc_FILE_CHANGED
-  unset bersc_SPEC_FROM_FILE_CHANGED
 }
