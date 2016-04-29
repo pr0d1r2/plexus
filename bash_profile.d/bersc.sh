@@ -6,6 +6,7 @@ function bersc() {
     echo "$0: not a git repo!"
     return 1
   fi
+  rspec_ensure_no_focus || return $?
   bersc_SPECS=()
   for bersc_FILE_CHANGED in `git st | grep _spec.rb | grep -v "^D  " | cut -b4- | sed -e 's/ -> /|/g' | cut -f 2 -d '|'`
   do
