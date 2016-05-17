@@ -1,7 +1,7 @@
 function bepc() {
   if [ -f knapsack_cucumber_report.json ]; then
-    bundle exec `rake_executable` knapsack:cucumber
+    DISABLE_SPRING=1 bundle exec rake knapsack:cucumber
   else
-    bundle exec `rake_executable` parallel:features
+    DISABLE_SPRING=1 bundle exec rake parallel:features
   fi
 }
