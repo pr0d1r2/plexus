@@ -1,6 +1,9 @@
 function pgtune_mac() {
   local pgtune_mac_CONFIG=$1
   local pgtune_mac_RELOAD=0
+  local pgtune_mac_PG_VERSION
+  local pgtune_mac_PG_VERSION_MAJOR
+  local pgtune_mac_PG_VERSION_MINOR
   case $pgtune_mac_CONFIG in
     '')
       pgtune_mac_CONFIG="/usr/local/var/postgres/postgresql.conf"
@@ -36,6 +39,23 @@ function pgtune_mac() {
       mv ~/.postgresql.conf.tmp $pgtune_mac_CONFIG || return $?
       pgtune_mac_RELOAD=1
     fi
+
+    # this will go when pgtune supports postgres 9.5+
+    pgtune_mac_PG_VERSION=`psql --version | cut -f 2 -d \)`
+    pgtune_mac_PG_VERSION_MAJOR=`echo $pgtune_mac_PG_VERSION | cut -f 1 -d .`
+    pgtune_mac_PG_VERSION_MINOR=`echo $pgtune_mac_PG_VERSION | cut -f 2 -d .`
+    if [ $pgtune_mac_PG_VERSION_MAJOR -eq 9 ]; then
+      if [ $pgtune_mac_PG_VERSION_MINOR -gt 4 ]; then
+        cat $pgtune_mac_CONFIG | grep -q "^checkpoint_segments"
+        if [ $? -eq 0 ]; then
+          echo "Removing checkpoint_segments as postgres versions >9.4 ..."
+          cat $pgtune_mac_CONFIG | grep -v "^checkpoint_segments" > ~/.postgresql.conf.tmp || return $?
+          mv ~/.postgresql.conf.tmp $pgtune_mac_CONFIG || return $?
+          pgtune_mac_RELOAD=1
+        fi
+      fi
+    fi
+
     if [ $pgtune_mac_RELOAD -eq 1 ]; then
       pgreload_mac || return $?
     fi
