@@ -20,6 +20,22 @@ function pgtune_mac() {
       mv ~/.postgresql.conf.tmp $pgtune_mac_CONFIG || return $?
       pgtune_mac_RELOAD=1
     fi
+    cat $pgtune_mac_CONFIG | grep -q "fsync = off"
+    if [ $? -gt 0 ]; then
+      echo "Disabling fsync for better performance ..."
+      cp $pgtune_mac_CONFIG ~/.postgresql.conf.tmp || return $?
+      echo "fsync = off" >> ~/.postgresql.conf.tmp || return $?
+      mv ~/.postgresql.conf.tmp $pgtune_mac_CONFIG || return $?
+      pgtune_mac_RELOAD=1
+    fi
+    cat $pgtune_mac_CONFIG | grep -q "wal_level = minimum"
+    if [ $? -gt 0 ]; then
+      echo "Setting archive wal_level for better performance ..."
+      cp $pgtune_mac_CONFIG ~/.postgresql.conf.tmp || return $?
+      echo "wal_level = archive" >> ~/.postgresql.conf.tmp || return $?
+      mv ~/.postgresql.conf.tmp $pgtune_mac_CONFIG || return $?
+      pgtune_mac_RELOAD=1
+    fi
     if [ $pgtune_mac_RELOAD -eq 1 ]; then
       pgreload_mac || return $?
     fi
