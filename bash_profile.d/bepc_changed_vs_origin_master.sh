@@ -1,5 +1,4 @@
 function bepc_changed_vs_origin_master() {
-  rspec_ensure_no_focus || return $?
   local bepc_changed_vs_origin_master_FILE
   local bepc_changed_vs_origin_master_FILES_EXISTING=()
   for bepc_changed_vs_origin_master_FILE in `git_files_changed_vs_origin_master | grep features | grep ".feature$"`
