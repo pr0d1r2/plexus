@@ -18,5 +18,6 @@ function renice_loop() {
       renice_named $renice_loop_PROCESS_NAME
     done
     sleep $renice_loop_INTERVAL
+    echo
   done
 }
