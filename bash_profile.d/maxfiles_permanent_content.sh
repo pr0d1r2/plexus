@@ -15,11 +15,8 @@ cat <<EOF
     <string>limit.maxfiles</string>
     <key>ProgramArguments</key>
     <array>
-      <string>launchctl</string>
-      <string>limit</string>
-      <string>maxfiles</string>
-      <string>$maxfiles_permanent_content_NUM</string>
-      <string>$maxfiles_permanent_content_NUM</string>
+      <string>sysctl</string>
+      <string>kern.maxfiles=$maxfiles_permanent_content_NUM</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
