@@ -16,6 +16,7 @@ cat <<EOF
     <key>ProgramArguments</key>
     <array>
       <string>sysctl</string>
+      <string>-w</string>
       <string>kern.maxfiles=$maxfiles_permanent_content_NUM</string>
     </array>
     <key>RunAtLoad</key>
