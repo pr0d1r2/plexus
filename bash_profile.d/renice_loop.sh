@@ -15,7 +15,7 @@ function renice_loop() {
   while do
     for renice_loop_PROCESS_NAME in $@
     do
-      renice_named $renice_loop_PROCESS_NAME
+      NICE="$renice_loop_LEVEL" renice_named $renice_loop_PROCESS_NAME
     done
     sleep $renice_loop_INTERVAL
     echo
