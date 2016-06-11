@@ -11,4 +11,5 @@ function bekc() {
       DISABLE_SPRING=1 KNAPSACK_TEST_FILE_PATTERN="{`echo $@ | tr ' ' ','`}" bundle exec rake knapsack:cucumber
       ;;
   esac
+  return $?
 }

@@ -11,4 +11,5 @@ function beks() {
       DISABLE_SPRING=1 KNAPSACK_TEST_FILE_PATTERN="{`echo $@ | tr ' ' ','`}" bundle exec rake "knapsack:rspec[--fail-fast]"
       ;;
   esac
+  return $?
 }

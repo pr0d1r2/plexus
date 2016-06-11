@@ -7,4 +7,5 @@ function bepc() {
       DISABLE_SPRING=1 bundle exec parallel_cucumber $@
       ;;
   esac
+  return $?
 }
