@@ -11,7 +11,7 @@ function dvd_to_x265_placebo() {
           dvd_to_x265_placebo_INPUT="$dvd_to_x265_placebo_INPUT|$dvd_to_x265_placebo_FILE"
         done
         dvd_to_x265_placebo_INPUT=`echo $dvd_to_x265_placebo_INPUT | sed -e 's/concat:|/concat:/'`
-        echorun ffmpeg -i "$dvd_to_x265_placebo_INPUT" -c:v libx265 -preset placebo -crf 28 -c:a aac -b:a 128k -threads 0 $dvd_to_x265_placebo_DIR.x265.mp4 || \
+        echorun ffmpeg -i "$dvd_to_x265_placebo_INPUT" -c:v libx265 -preset placebo -crf 28 -c:a copy -threads 0 $dvd_to_x265_placebo_DIR.x265.mp4 || \
           echo "Note that you may want to reinstall ffmpeg with 'brew reinstall ffmpeg --with-x265'"
       else
         echo
