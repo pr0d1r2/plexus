@@ -2,8 +2,8 @@ unalias bu
 function bu() {
   is_new_bundler
   if [ $? -eq 0 ]; then
-    bundle update -j`bundler_threads` $@ || return $?
+    echorun bundle update -j`bundler_threads` $@ || return $?
   else
-    bundle update $@ || return $?
+    echorun bundle update $@ || return $?
   fi
 }
