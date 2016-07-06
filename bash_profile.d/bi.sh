@@ -1,3 +1,4 @@
+unalias bi
 function bi() {
   is_new_bundler
   if [ $? -eq 0 ]; then

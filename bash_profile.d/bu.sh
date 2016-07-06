@@ -1,3 +1,4 @@
+unalias bu
 function bu() {
   is_new_bundler
   if [ $? -eq 0 ]; then
