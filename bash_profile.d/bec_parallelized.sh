@@ -13,9 +13,9 @@ function bec_parallelized() {
   for bec_parallelized_FILE in $@
   do
     if [ $bec_parallelized_TEST_ENV_NUMBER -eq 1 ]; then
-      TEST_ENV_NUMBER="$bec_parallelized_TEST_ENV_NUMBER" bec $bec_parallelized_FILE &
+      TEST_ENV_NUMBER="$bec_parallelized_TEST_ENV_NUMBER" bec -p parallel $bec_parallelized_FILE &
     else
-      TEST_ENV_NUMBER="$bec_parallelized_TEST_ENV_NUMBER" bundle exec cucumber $bec_parallelized_FILE &
+      TEST_ENV_NUMBER="$bec_parallelized_TEST_ENV_NUMBER" bundle exec cucumber -p parallel $bec_parallelized_FILE &
     fi
     bec_parallelized_TEST_ENV_NUMBER+=1
   done
