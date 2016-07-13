@@ -6,7 +6,7 @@ function bec_parallelized() {
     bec_parallelized_TEST_ENV_NUMBER+=1
   done
   if [ $bec_parallelized_TEST_ENV_NUMBER -gt `cpu_num` ]; then
-    echo "Numer of specs greater than CPUs. Exiting ..."
+    echo "Number of specs greater than CPUs. Exiting ..."
     return 8472
   fi
   local bec_parallelized_TEST_ENV_NUMBER=1
