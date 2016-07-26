@@ -8,7 +8,7 @@ function bepsc() {
   fi
   rspec_ensure_no_focus || return $?
   bepsc_SPECS=()
-  for bepsc_FILE_CHANGED in `git st | grep _spec.rb | grep -v "^D  " | cut -b4- | sed -e 's/ -> /|/g' | cut -f 2 -d '|'`
+  for bepsc_FILE_CHANGED in `changed_specs`
   do
     bepsc_SPECS+=$bepsc_FILE_CHANGED
   done
