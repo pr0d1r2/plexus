@@ -39,6 +39,14 @@ function pgtune_mac() {
       mv ~/.postgresql.conf.tmp $pgtune_mac_CONFIG || return $?
       pgtune_mac_RELOAD=1
     fi
+    cat $pgtune_mac_CONFIG | grep -q "max_locks_per_transaction = 1024"
+    if [ $? -gt 0 ]; then
+      echo "Setting max_locks_per_transaction to work with huge databases ..."
+      cp $pgtune_mac_CONFIG ~/.postgresql.conf.tmp || return $?
+      echo "max_locks_per_transaction = 1024" >> ~/.postgresql.conf.tmp || return $?
+      mv ~/.postgresql.conf.tmp $pgtune_mac_CONFIG || return $?
+      pgtune_mac_RELOAD=1
+    fi
 
     # this will go when pgtune supports postgres 9.5+
     pgtune_mac_PG_VERSION=`psql --version | cut -f 2 -d \)`
