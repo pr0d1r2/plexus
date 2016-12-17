@@ -1,1 +1,0 @@
-RAILS_LOG_LEVEL=unknown
