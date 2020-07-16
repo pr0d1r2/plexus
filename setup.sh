@@ -94,7 +94,7 @@ function install_ruby() {
 function install_gem() {
   if [ ! -f ~/.plexus/gem-$1-$RUBY_VERSION.installed ]; then
     echo "Installing gem $1 ..."
-    gem install $1 --no-ri --no-rdoc || return $?
+    gem install $1 --no-document || return $?
     plexus_touch gem-$1-$RUBY_VERSION.installed
   fi
 }

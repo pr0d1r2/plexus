@@ -1,6 +1,6 @@
 # http://docs.rubygems.org/read/chapter/11
 --- 
-gem: --no-ri --no-rdoc --no-document
+gem: --no-document
 benchmark: false
 verbose: true
 update_sources: true
